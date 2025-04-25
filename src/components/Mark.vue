@@ -37,12 +37,13 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100%;
+	width: 30%;
+	aspect-ratio: 1;
 }
 
 svg {
 	width: 100%;
-	height: auto;
+	height: 100%;
 }
 
 .area {
