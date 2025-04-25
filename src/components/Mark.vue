@@ -37,7 +37,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 30%;
+	width: 34%;
 	aspect-ratio: 1;
 }
 
