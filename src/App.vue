@@ -8,6 +8,9 @@
 						this.selectedY = coordinates.y
 					}
 				"
+				:dataShot="dataShot"
+				:rowSelected="rowSelected"
+				:colSelected="colSelected"
 			/>
 		</div>
 		<div class="right">

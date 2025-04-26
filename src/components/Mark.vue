@@ -18,16 +18,36 @@
 				cx="50%"
 				cy="50%"
 			/>
+
+			<!-- bullet hole for selected -->
+			<BulletHole
+				v-for="(hole, index) in holesX"
+				:key="index"
+				:x="holesX[index]"
+				:y="holesY[index]"
+			/>
 		</svg>
 	</div>
 </template>
 
 <script>
+import BulletHole from "./BulletHole.vue"
+
 export default {
 	name: "Mark",
+	components: {
+		BulletHole,
+	},
+	props: {
+		dataShot: Array,
+		rowSelected: Number,
+		colSelected: Number,
+	},
 	data() {
 		return {
 			radius: [45, 41, 37, 33, 29, 25, 21, 17, 13, 9, 5],
+			holesX: [],
+			holesY: [],
 		}
 	},
 	emits: ["clickedCoordinates"],
@@ -38,6 +58,34 @@ export default {
 			const xRelative = (event.clientX - rect.left) / rect.width
 			const yRelative = (event.clientY - rect.top) / rect.height
 			this.$emit("clickedCoordinates", {x: xRelative, y: yRelative})
+		},
+	},
+	computed: {
+		holes() {
+			let holes = []
+			try {
+				if (this.rowSelected !== -1 && this.colSelected !== -1) {
+					holes = this.dataShot[this.rowSelected][this.colSelected]
+				} else if (this.rowSelected === -1 && this.colSelected !== -1) {
+					for (let r = 0; r < this.dataShot.length; r++) {
+						holes.push(this.dataShot[r][this.colSelected])
+					}
+				} else if (this.rowSelected !== -1 && this.colSelected === -1) {
+					for (let c = 0; c < this.dataShot[0].length; c++) {
+						holes.push(this.dataShot[this.rowSelected][c])
+					}
+				} else {
+					for (let r = 0; r < this.dataShot.length; r++) {
+						for (let c = 0; c < this.dataShot[0].length; c++) {
+							holes.push(this.dataShot[r][c])
+						}
+					}
+				}
+			} catch (e) {
+				holes = []
+			}
+
+			return holes
 		},
 	},
 }
