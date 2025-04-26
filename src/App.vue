@@ -77,6 +77,14 @@
 		</div>
 	</div>
 	<MetaInput v-model:metadata="metadata" />
+	<FileControl
+		:entireData="entireData"
+		@upload="
+			(fileData) => {
+				this.DecompressJson(fileData)
+			}
+		"
+	/>
 	<ColorPicker v-model:colors="colors" />
 </template>
 
@@ -87,6 +95,7 @@ import ScoreTable from "./components/ScoreTable.vue"
 import ColorPicker from "./components/ColorPicker.vue"
 import InputsSum from "./components/InputsSum.vue"
 import MetaInput from "./components/MetaInput.vue"
+import FileControl from "./components/FileControl.vue"
 
 export default {
 	name: "App",
@@ -97,6 +106,7 @@ export default {
 		ColorPicker,
 		InputsSum,
 		MetaInput,
+		FileControl,
 	},
 	data() {
 		return {
@@ -135,6 +145,12 @@ export default {
 		this._InitializeSumComments()
 	},
 	methods: {
+		DecompressJson(json) {
+			this.metadata = json.metadata
+			this.dataShot = json.dataShot
+			this.colors = json.colors
+			this.sumComments = json.sumComments
+		},
 		_InitializeDataShot() {
 			this.dataShot = []
 			for (let r = 0; r < this.rows; r++) {
@@ -184,6 +200,16 @@ export default {
 				return row
 			} else {
 				return this.rows + this.cols
+			}
+		},
+	},
+	computed: {
+		entireData() {
+			return {
+				metadata: this.metadata,
+				dataShot: this.dataShot,
+				colors: this.colors,
+				sumComments: this.sumComments,
 			}
 		},
 	},
