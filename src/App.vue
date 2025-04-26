@@ -6,6 +6,10 @@
 					(coordinates) => {
 						this.selectedX = coordinates.x
 						this.selectedY = coordinates.y
+
+						this.dataShot[this.rowSelected][this.colSelected].x = coordinates.x
+						this.dataShot[this.rowSelected][this.colSelected].y = coordinates.y
+						this.dataShot[this.rowSelected][this.colSelected].set = true
 					}
 				"
 				:dataShot="dataShot"
@@ -20,7 +24,13 @@
 					:row="rowSelected"
 					:x="selectedX"
 					:y="selectedY"
-					v-model:scoreX10="scoreX10Selected"
+					:scoreX10="scoreX10Selected"
+					@update:scoreX10="
+						(score) => {
+							scoreX10Selected = score
+							this.dataShot[this.rowSelected][this.colSelected].scoreX10 = score
+						}
+					"
 				/>
 			</div>
 			<div class="bottom">
@@ -96,23 +106,6 @@ export default {
 		},
 	},
 	watch: {
-		scoreX10Selected(newValue) {
-			if (this.rowSelected !== -1 && this.colSelected !== -1) {
-				this.dataShot[this.rowSelected][this.colSelected].scoreX10 = newValue
-			}
-		},
-		selectedX(newValue) {
-			if (this.rowSelected !== -1 && this.colSelected !== -1) {
-				this.dataShot[this.rowSelected][this.colSelected].x = newValue
-				this.dataShot[this.rowSelected][this.colSelected].set = true
-			}
-		},
-		selectedY(newValue) {
-			if (this.rowSelected !== -1 && this.colSelected !== -1) {
-				this.dataShot[this.rowSelected][this.colSelected].y = newValue
-				this.dataShot[this.rowSelected][this.colSelected].set = true
-			}
-		},
 		rowSelected(newValue) {
 			this._OnSelectionChanged()
 		},
