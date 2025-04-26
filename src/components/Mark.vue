@@ -19,6 +19,18 @@
 				cy="50%"
 			/>
 
+			<!-- area number -->
+			<svg v-for="(radius, index) in radiuses" :key="index">
+				<text
+					v-if="radius > 7"
+					font-size="10"
+					:x="50 - radius + 2 + '%'"
+					y="51%"
+				>
+					{{ index + 1 }}
+				</text>
+			</svg>
+
 			<!-- bullet hole for selected -->
 			<BulletHole
 				v-for="(hole, index) in holes"
