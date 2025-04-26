@@ -19,6 +19,9 @@
 							$emit('update:rowSelected', rowIndex),
 								$emit('update:colSelected', colIndex)
 						"
+						:class="{
+							selected: rowIndex === rowSelected && colIndex === colSelected,
+						}"
 					>
 						0
 					</td>
@@ -28,6 +31,9 @@
 							$emit('update:rowSelected', rowIndex),
 								$emit('update:colSelected', -1)
 						"
+						:class="{
+							selected: rowIndex === rowSelected && colSelected === -1,
+						}"
 					>
 						0
 					</td>
@@ -42,6 +48,9 @@
 							$emit('update:rowSelected', -1),
 								$emit('update:colSelected', colIndex)
 						"
+						:class="{
+							selected: rowSelected === -1 && colSelected === colIndex,
+						}"
 					>
 						0
 					</td>
@@ -50,6 +59,9 @@
 						@click="
 							$emit('update:rowSelected', -1), $emit('update:colSelected', -1)
 						"
+						:class="{
+							selected: rowSelected === -1 && colSelected === -1,
+						}"
 					>
 						0
 					</td>
@@ -66,6 +78,8 @@ export default {
 		dataShot: Array,
 		cols: Number,
 		rows: Number,
+		colSelected: Number,
+		rowSelected: Number,
 	},
 	emits: ["update:colSelected", "update:rowSelected"],
 }
@@ -91,5 +105,9 @@ export default {
 .ScoreTable td {
 	border: 1px solid black;
 	text-align: center;
+}
+
+.ScoreTable td.selected {
+	background-color: yellow; /* Highlight selected cell */
 }
 </style>
