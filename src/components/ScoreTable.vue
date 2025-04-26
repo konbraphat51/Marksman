@@ -9,9 +9,18 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(row, index) in rows" :key="index">
-					<td>{{ index + 1 }}</td>
-					<td v-for="(col, colIndex) in cols" :key="colIndex">0</td>
+				<tr v-for="(row, rowIndex) in rows" :key="rowIndex">
+					<td>{{ rowIndex + 1 }}</td>
+					<td
+						v-for="(col, colIndex) in cols"
+						:key="colIndex"
+						@click="
+							$emit('update:rowSelected', rowIndex),
+								$emit('update:colSelected', colIndex)
+						"
+					>
+						0
+					</td>
 					<td>0</td>
 				</tr>
 				<tr>
@@ -31,8 +40,6 @@ export default {
 		dataShot: Array,
 		cols: Number,
 		rows: Number,
-		colSelected: Number,
-		rowSelected: Number,
 	},
 	emits: ["update:colSelected", "update:rowSelected"],
 }

@@ -12,8 +12,8 @@
 					:dataShot="dataShot"
 					:rows="rows"
 					:cols="cols"
-					v-model:rowSelected="rowSelected"
-					v-model:colSelected="colSelected"
+					@update:rowSelected="(val) => (rowSelected = val)"
+					@update:colSelected="(val) => (colSelected = val)"
 				/>
 			</div>
 		</div>
