@@ -55,18 +55,20 @@ export default {
 }
 
 .index-view {
-	width: 8%;
+	width: auto;
 	height: 100%;
 	border-width: 1px;
 	border-style: solid;
 	border-color: black;
+	padding-right: 5px;
+	padding-left: 2px;
 }
 
 .score-input {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	width: 20%;
+	width: auto;
 	height: 100%;
 	border-style: solid;
 	border-color: black;
@@ -76,18 +78,20 @@ export default {
 
 .score-input input {
 	height: 50%;
-	width: 40%;
-	margin-left: 5px;
+	width: 45px;
+	margin-left: 2px;
+	margin-right: 3px;
 }
 
 .coordinates-view {
 	display: flex;
 	flex-direction: column;
-	width: 13%;
+	width: auto;
 	height: 100%;
 	border-style: solid;
 	border-color: black;
 	border-width: 1px;
 	padding-left: 2px;
+	padding-right: 2px;
 }
 </style>
