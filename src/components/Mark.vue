@@ -84,7 +84,6 @@ export default {
 			} catch (e) {
 				holes = []
 			}
-			console.log(this.holes)
 			this.holes = holes
 		},
 	},
