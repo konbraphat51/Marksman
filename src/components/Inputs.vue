@@ -52,7 +52,25 @@ export default {
 	width: 8%;
 	height: 100%;
 	border-width: 1px;
-	border-style: solid; /* Added border style */
-	border-color: black; /* Added border color */
+	border-style: solid;
+	border-color: black;
+}
+
+.score-input {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 20%;
+	height: 100%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding-left: 2px;
+}
+
+.score-input input {
+	height: 50%;
+	width: 40%;
+	margin-left: 5px;
 }
 </style>
