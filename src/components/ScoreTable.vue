@@ -12,6 +12,7 @@
 				<tr v-for="(row, rowIndex) in rows" :key="rowIndex">
 					<td>{{ rowIndex + 1 }}</td>
 					<td
+						class="cell"
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
 						@click="
@@ -21,12 +22,37 @@
 					>
 						0
 					</td>
-					<td>0</td>
+					<td
+						class="cell total-row"
+						@click="
+							$emit('update:rowSelected', rowIndex),
+								$emit('update:colSelected', -1)
+						"
+					>
+						0
+					</td>
 				</tr>
 				<tr>
 					<td>Total</td>
-					<td v-for="(col, colIndex) in cols" :key="colIndex">0</td>
-					<td>0</td>
+					<td
+						v-for="(col, colIndex) in cols"
+						:key="colIndex"
+						class="cell total-column"
+						@click="
+							$emit('update:rowSelected', -1),
+								$emit('update:colSelected', colIndex)
+						"
+					>
+						0
+					</td>
+					<td
+						class="cell total-all"
+						@click="
+							$emit('update:rowSelected', -1), $emit('update:colSelected', -1)
+						"
+					>
+						0
+					</td>
 				</tr>
 			</tbody>
 		</table>
