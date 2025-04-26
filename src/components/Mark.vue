@@ -3,7 +3,7 @@
 		<svg xmlns="http://www.w3.org/2000/svg" @click="_OnClicked">
 			<!-- area -->
 			<circle
-				v-for="(radius, index) in radius"
+				v-for="(radius, index) in radiuses"
 				:r="radius + '%'"
 				class="area"
 				cx="50%"
@@ -12,7 +12,7 @@
 
 			<!-- border -->
 			<circle
-				v-for="(radius, index) in radius"
+				v-for="(radius, index) in radiuses"
 				:r="radius + '%'"
 				class="border"
 				cx="50%"
@@ -43,10 +43,10 @@ export default {
 		rowSelected: Number,
 		colSelected: Number,
 		colors: Array,
+		guntype: String,
 	},
 	data() {
 		return {
-			radius: [45, 41, 37, 33, 29, 25, 21, 17, 13, 9, 5],
 			holes: [],
 		}
 	},
@@ -94,6 +94,17 @@ export default {
 		},
 		_SelectColor(scoreX10) {
 			return this.colors[parseInt(scoreX10 / 10)]
+		},
+	},
+	computed: {
+		radiuses() {
+			if (this.guntype === "AR") {
+				return [45, 40, 35, 30, 25, 20, 15, 10, 5, 1]
+			} else if (this.guntype === "SB") {
+				return [45, 41, 37, 33, 29, 25, 21, 17, 13, 4, 2]
+			} else {
+				return [45, 25, 5, 1]
+			}
 		},
 	},
 	watch: {
