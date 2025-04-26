@@ -76,6 +76,7 @@
 			</div>
 		</div>
 	</div>
+	<MetaInput v-model:metadata="metadata" />
 	<ColorPicker v-model:colors="colors" />
 </template>
 
@@ -85,6 +86,7 @@ import Inputs from "./components/Inputs.vue"
 import ScoreTable from "./components/ScoreTable.vue"
 import ColorPicker from "./components/ColorPicker.vue"
 import InputsSum from "./components/InputsSum.vue"
+import MetaInput from "./components/MetaInput.vue"
 
 export default {
 	name: "App",
@@ -94,6 +96,7 @@ export default {
 		ScoreTable,
 		ColorPicker,
 		InputsSum,
+		MetaInput,
 	},
 	data() {
 		return {
@@ -120,6 +123,11 @@ export default {
 				"#808080",
 				"#FFA500",
 			],
+			metadata: {
+				match: "",
+				date: "",
+				guntype: "AR",
+			},
 		}
 	},
 	created() {
