@@ -1,6 +1,7 @@
 <template>
 	<div class="mark-container">
 		<svg xmlns="http://www.w3.org/2000/svg" @click="_OnClicked">
+			<!-- area -->
 			<circle
 				v-for="(radius, index) in radius"
 				:r="radius + '%'"
@@ -9,6 +10,7 @@
 				cy="50%"
 			/>
 
+			<!-- border -->
 			<circle
 				v-for="(radius, index) in radius"
 				:r="radius + '%'"
