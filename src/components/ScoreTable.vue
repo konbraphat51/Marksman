@@ -35,7 +35,7 @@
 							selected: rowIndex === rowSelected && colSelected === -1,
 						}"
 					>
-						0
+						{{ rowSums[rowIndex] / 10 || 0 }}
 					</td>
 				</tr>
 				<tr>
@@ -52,7 +52,7 @@
 							selected: rowSelected === -1 && colSelected === colIndex,
 						}"
 					>
-						0
+						{{ columnSums[colIndex] / 10 || 0 }}
 					</td>
 					<td
 						class="cell total-all"
@@ -63,7 +63,7 @@
 							selected: rowSelected === -1 && colSelected === -1,
 						}"
 					>
-						0
+						{{ totalSum / 10 || 0 }}
 					</td>
 				</tr>
 			</tbody>
@@ -81,7 +81,17 @@ export default {
 		colSelected: Number,
 		rowSelected: Number,
 	},
+	data() {
+		return {
+			columnSums: [],
+			rowSums: [],
+			totalSum: 0,
+		}
+	},
 	emits: ["update:colSelected", "update:rowSelected"],
+	beforeMount() {
+		this._UpdateSums()
+	},
 	methods: {
 		GetDatum(row, col, key) {
 			try {
@@ -89,6 +99,30 @@ export default {
 			} catch (e) {
 				return null
 			}
+		},
+		_UpdateSums() {
+			this.columnSums = Array(this.cols).fill(0)
+			this.rowSums = Array(this.rows).fill(0)
+			this.totalSum = 0
+
+			for (let r = 0; r < this.rows; r++) {
+				for (let c = 0; c < this.cols; c++) {
+					const scoreX10 = this.GetDatum(r, c, "scoreX10")
+					if (scoreX10) {
+						this.columnSums[c] += scoreX10
+						this.rowSums[r] += scoreX10
+						this.totalSum += scoreX10
+					}
+				}
+			}
+		},
+	},
+	watch: {
+		dataShot: {
+			handler() {
+				this._UpdateSums()
+			},
+			deep: true,
 		},
 	},
 }
