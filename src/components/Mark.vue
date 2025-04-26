@@ -20,7 +20,12 @@
 			/>
 
 			<!-- bullet hole for selected -->
-			<BulletHole v-for="(hole, index) in holes" :x="hole.x" :y="hole.y" />
+			<BulletHole
+				v-for="(hole, index) in holes"
+				:x="hole.x"
+				:y="hole.y"
+				:color="_SelectColor(hole.scoreX10)"
+			/>
 		</svg>
 	</div>
 </template>
@@ -37,6 +42,7 @@ export default {
 		dataShot: Array,
 		rowSelected: Number,
 		colSelected: Number,
+		colors: Array,
 	},
 	data() {
 		return {
@@ -85,6 +91,9 @@ export default {
 				holes = []
 			}
 			this.holes = holes
+		},
+		_SelectColor(scoreX10) {
+			return this.colors[parseInt(scoreX10 / 10)]
 		},
 	},
 	watch: {

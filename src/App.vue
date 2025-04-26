@@ -15,6 +15,7 @@
 				:dataShot="dataShot"
 				:rowSelected="rowSelected"
 				:colSelected="colSelected"
+				:colors="colors"
 			/>
 		</div>
 		<div class="right">
@@ -51,12 +52,14 @@
 			</div>
 		</div>
 	</div>
+	<ColorPicker v-model:colors="colors" />
 </template>
 
 <script>
 import Mark from "./components/Mark.vue"
 import Inputs from "./components/Inputs.vue"
 import ScoreTable from "./components/ScoreTable.vue"
+import ColorPicker from "./components/ColorPicker.vue"
 
 export default {
 	name: "App",
@@ -64,6 +67,7 @@ export default {
 		Mark,
 		Inputs,
 		ScoreTable,
+		ColorPicker,
 	},
 	data() {
 		return {
@@ -76,6 +80,18 @@ export default {
 			oxSelected: "",
 			selectedX: 0,
 			selectedY: 0,
+			colors: [
+				"#FF0000",
+				"#00FF00",
+				"#0000FF",
+				"#FFFF00",
+				"#FF00FF",
+				"#00FFFF",
+				"#FFFFFF",
+				"#000000",
+				"#808080",
+				"#FFA500",
+			],
 		}
 	},
 	beforeMount() {
