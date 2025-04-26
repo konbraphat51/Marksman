@@ -1,7 +1,46 @@
-<script setup>
+<script>
 import Mark from "./components/Mark.vue"
 import Inputs from "./components/Inputs.vue"
 import ScoreTable from "./components/ScoreTable.vue"
+
+export default {
+	name: "App",
+	components: {
+		Mark,
+		Inputs,
+		ScoreTable,
+	},
+	data() {
+		return {
+			dataShot: [],
+			rows: 6,
+			cols: 10,
+		}
+	},
+	mounted() {
+		this._InitializeDataShot()
+	},
+	setup() {},
+	methods: {
+		_InitializeDataShot() {
+			this.dataShot = []
+			for (let r = 0; r < this.rows; r++) {
+				//add a new row
+				this.dataShot.push([])
+
+				for (let c = 0; c < this.cols; c++) {
+					// add a new column
+					this.dataShot[r].push({
+						set: false,
+						x: 0,
+						y: 0,
+						score: 0,
+					})
+				}
+			}
+		},
+	},
+}
 </script>
 
 <template>
