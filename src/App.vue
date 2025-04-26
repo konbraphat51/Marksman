@@ -99,7 +99,7 @@ export default {
 		},
 	},
 	watch: {
-		scoreX10(newValue) {
+		scoreX10Selected(newValue) {
 			if (
 				this.dataInitialized &&
 				this.rowSelected !== -1 &&
