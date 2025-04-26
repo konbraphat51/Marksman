@@ -77,7 +77,7 @@ export default {
 }
 
 .top {
-	height: 20px;
+	height: 35px;
 }
 
 .bottom {
