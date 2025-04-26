@@ -37,8 +37,9 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 34%;
-	aspect-ratio: 1;
+	width: 100%;
+	height: 100%;
+	background-color: burlywood;
 }
 
 svg {
