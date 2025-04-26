@@ -83,7 +83,7 @@ export default {
 .coordinates-view {
 	display: flex;
 	flex-direction: column;
-	width: 10%;
+	width: 13%;
 	height: 100%;
 	border-style: solid;
 	border-color: black;
