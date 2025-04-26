@@ -100,17 +100,29 @@ export default {
 	},
 	watch: {
 		scoreX10(newValue) {
-			if (this.dataInitialized) {
+			if (
+				this.dataInitialized &&
+				this.rowSelected !== -1 &&
+				this.colSelected !== -1
+			) {
 				this.dataShot[this.rowSelected][this.colSelected].scoreX10 = newValue
 			}
 		},
 		selectedX(newValue) {
-			if (this.dataInitialized) {
+			if (
+				this.dataInitialized &&
+				this.rowSelected !== -1 &&
+				this.colSelected !== -1
+			) {
 				this.dataShot[this.rowSelected][this.colSelected].x = newValue
 			}
 		},
 		selectedY(newValue) {
-			if (this.dataInitialized) {
+			if (
+				this.dataInitialized &&
+				this.rowSelected !== -1 &&
+				this.colSelected !== -1
+			) {
 				this.dataShot[this.rowSelected][this.colSelected].y = newValue
 			}
 		},
