@@ -28,6 +28,7 @@ export default {
 	computed: {
 		leftTopX() {
 			let x = this.x * 100 - this.size / 2
+			console.log("leftTopX", this.x)
 			return `${x}%`
 		},
 		leftTopY() {
