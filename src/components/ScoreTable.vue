@@ -40,5 +40,20 @@ export default {
 	width: 100%;
 	height: 100%;
 	background-color: lightgreen;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ScoreTable {
+	width: 100%;
+	height: 100%;
+	border-collapse: collapse;
+}
+
+.ScoreTable th,
+.ScoreTable td {
+	border: 1px solid black;
+	text-align: center;
 }
 </style>
