@@ -57,19 +57,27 @@ export default {
 			let holes = []
 			try {
 				if (this.rowSelected !== -1 && this.colSelected !== -1) {
-					holes.push(this.dataShot[this.rowSelected][this.colSelected])
+					if (this.dataShot[this.rowSelected][this.colSelected].set) {
+						holes.push(this.dataShot[this.rowSelected][this.colSelected])
+					}
 				} else if (this.rowSelected === -1 && this.colSelected !== -1) {
 					for (let r = 0; r < this.dataShot.length; r++) {
-						holes.push(this.dataShot[r][this.colSelected])
+						if (this.dataShot[r][this.colSelected].set) {
+							holes.push(this.dataShot[r][this.colSelected])
+						}
 					}
 				} else if (this.rowSelected !== -1 && this.colSelected === -1) {
 					for (let c = 0; c < this.dataShot[0].length; c++) {
-						holes.push(this.dataShot[this.rowSelected][c])
+						if (this.dataShot[this.rowSelected][c].set) {
+							holes.push(this.dataShot[this.rowSelected][c])
+						}
 					}
 				} else {
 					for (let r = 0; r < this.dataShot.length; r++) {
 						for (let c = 0; c < this.dataShot[0].length; c++) {
-							holes.push(this.dataShot[r][c])
+							if (this.dataShot[r][c].set) {
+								holes.push(this.dataShot[r][c])
+							}
 						}
 					}
 				}

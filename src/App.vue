@@ -115,6 +115,7 @@ export default {
 				this.colSelected !== -1
 			) {
 				this.dataShot[this.rowSelected][this.colSelected].x = newValue
+				this.dataShot[this.rowSelected][this.colSelected].set = true
 			}
 		},
 		selectedY(newValue) {
@@ -124,6 +125,7 @@ export default {
 				this.colSelected !== -1
 			) {
 				this.dataShot[this.rowSelected][this.colSelected].y = newValue
+				this.dataShot[this.rowSelected][this.colSelected].set = true
 			}
 		},
 		rowSelected(newValue) {
