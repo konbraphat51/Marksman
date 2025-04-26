@@ -1,3 +1,19 @@
+<template>
+	<div class="upper-container">
+		<div class="left">
+			<Mark />
+		</div>
+		<div class="right">
+			<div class="top">
+				<Inputs />
+			</div>
+			<div class="bottom">
+				<ScoreTable :dataShot="dataShot" :rows="rows" :cols="cols" />
+			</div>
+		</div>
+	</div>
+</template>
+
 <script>
 import Mark from "./components/Mark.vue"
 import Inputs from "./components/Inputs.vue"
@@ -43,22 +59,6 @@ export default {
 	},
 }
 </script>
-
-<template>
-	<div class="upper-container">
-		<div class="left">
-			<Mark />
-		</div>
-		<div class="right">
-			<div class="top">
-				<Inputs />
-			</div>
-			<div class="bottom">
-				<ScoreTable :dataShot="dataShot" :rows="rows" :cols="cols" />
-			</div>
-		</div>
-	</div>
-</template>
 
 <style scoped>
 .upper-container {
