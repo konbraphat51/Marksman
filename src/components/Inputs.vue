@@ -1,8 +1,8 @@
 <template>
 	<div class="input-container">
 		<div class="index-view">
-			<div class="col-view">col: {{ col }}</div>
-			<div class="row-view">row: {{ row }}</div>
+			<div class="col-view">col: {{ col + 1 }}</div>
+			<div class="row-view">row: {{ row + 1 }}</div>
 		</div>
 	</div>
 </template>

@@ -31,7 +31,10 @@ export default {
 		dataShot: Array,
 		cols: Number,
 		rows: Number,
+		colSelected: Number,
+		rowSelected: Number,
 	},
+	emits: ["update:colSelected", "update:rowSelected"],
 }
 </script>
 

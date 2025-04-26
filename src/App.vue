@@ -5,10 +5,16 @@
 		</div>
 		<div class="right">
 			<div class="top">
-				<Inputs />
+				<Inputs :col="colSelected" :row="rowSelected" />
 			</div>
 			<div class="bottom">
-				<ScoreTable :dataShot="dataShot" :rows="rows" :cols="cols" />
+				<ScoreTable
+					:dataShot="dataShot"
+					:rows="rows"
+					:cols="cols"
+					v-model:rowSelected="rowSelected"
+					v-model:colSelected="colSelected"
+				/>
 			</div>
 		</div>
 	</div>
