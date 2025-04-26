@@ -1,18 +1,42 @@
 <template>
-	<div class="Table-container">aaa<br />aaa</div>
+	<div class="ScoreTable-container">
+		<table class="ScoreTable">
+			<thead>
+				<tr>
+					<th></th>
+					<th v-for="(col, index) in cols" :key="index">{{ index + 1 }}</th>
+					<th>Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for="(row, index) in rows" :key="index">
+					<td>{{ index + 1 }}</td>
+					<td v-for="(col, colIndex) in cols" :key="colIndex">0</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Total</td>
+					<td v-for="(col, colIndex) in cols" :key="colIndex">0</td>
+					<td>0</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </template>
 
 <script>
 export default {
 	name: "ScoreTable",
-	data() {
-		return {}
+	props: {
+		dataShot: Array,
+		cols: Number,
+		rows: Number,
 	},
 }
 </script>
 
 <style scoped>
-.Table-container {
+.ScoreTable-container {
 	width: 100%;
 	height: 100%;
 	background-color: lightgreen;

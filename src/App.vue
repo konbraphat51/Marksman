@@ -52,7 +52,7 @@ export default {
 				<Inputs />
 			</div>
 			<div class="bottom">
-				<ScoreTable />
+				<ScoreTable :dataShot="dataShot" :rows="rows" :cols="cols" />
 			</div>
 		</div>
 	</div>
