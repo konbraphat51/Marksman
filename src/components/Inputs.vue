@@ -44,6 +44,13 @@
 			<div class="coordinates-value">X: {{ x.toFixed(3) }}</div>
 			<div class="coordinates-value">Y: {{ y.toFixed(3) }}</div>
 		</div>
+		<div class="comment-input">
+			<input
+				type="text"
+				:value="comment"
+				@input="$emit('update:comment', $event.target.value)"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -57,8 +64,9 @@ export default {
 		y: Number,
 		scoreX10: Number,
 		ox: String,
+		comment: String,
 	},
-	emits: ["update:scoreX10", "update:ox"],
+	emits: ["update:scoreX10", "update:ox", "update:comment"],
 	data() {
 		return {}
 	},
@@ -131,5 +139,20 @@ export default {
 	border-width: 1px;
 	padding-left: 2px;
 	padding-right: 2px;
+}
+
+.comment-input {
+	align-content: center;
+	text-align: center;
+	flex-grow: 1;
+	height: 100%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+}
+
+.comment-input input {
+	width: 90%;
+	height: 70%;
 }
 </style>

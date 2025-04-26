@@ -39,6 +39,14 @@
 							this.dataShot[this.rowSelected][this.colSelected].ox = ox
 						}
 					"
+					:comment="commentSelected"
+					@update:comment="
+						(comment) => {
+							this.commentSelected = comment
+							this.dataShot[this.rowSelected][this.colSelected].comment =
+								comment
+						}
+					"
 				/>
 			</div>
 			<div class="bottom">
@@ -80,6 +88,7 @@ export default {
 			oxSelected: "",
 			selectedX: 0,
 			selectedY: 0,
+			commentSelected: "",
 			colors: [
 				"#FF0000",
 				"#00FF00",
@@ -112,6 +121,7 @@ export default {
 						y: 0,
 						scoreX10: 0,
 						ox: "",
+						comment: "",
 					})
 				}
 			}
@@ -124,11 +134,14 @@ export default {
 				this.selectedX = this.dataShot[this.rowSelected][this.colSelected].x
 				this.selectedY = this.dataShot[this.rowSelected][this.colSelected].y
 				this.oxSelected = this.dataShot[this.rowSelected][this.colSelected].ox
+				this.commentSelected =
+					this.dataShot[this.rowSelected][this.colSelected].comment
 			} else {
 				this.scoreX10Selected = 0
 				this.selectedX = 0
 				this.selectedY = 0
 				this.oxSelected = ""
+				this.commentSelected = ""
 			}
 		},
 	},
