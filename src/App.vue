@@ -51,7 +51,6 @@ export default {
 	data() {
 		return {
 			dataShot: [],
-			dataInitialized: false,
 			rows: 6,
 			cols: 10,
 			rowSelected: 0,
@@ -61,7 +60,7 @@ export default {
 			selectedY: 0,
 		}
 	},
-	mounted() {
+	beforeMount() {
 		this._InitializeDataShot()
 	},
 	methods: {
@@ -81,8 +80,6 @@ export default {
 					})
 				}
 			}
-
-			this.dataInitialized = true
 		},
 
 		_OnSelectionChanged() {
@@ -100,30 +97,18 @@ export default {
 	},
 	watch: {
 		scoreX10Selected(newValue) {
-			if (
-				this.dataInitialized &&
-				this.rowSelected !== -1 &&
-				this.colSelected !== -1
-			) {
+			if (this.rowSelected !== -1 && this.colSelected !== -1) {
 				this.dataShot[this.rowSelected][this.colSelected].scoreX10 = newValue
 			}
 		},
 		selectedX(newValue) {
-			if (
-				this.dataInitialized &&
-				this.rowSelected !== -1 &&
-				this.colSelected !== -1
-			) {
+			if (this.rowSelected !== -1 && this.colSelected !== -1) {
 				this.dataShot[this.rowSelected][this.colSelected].x = newValue
 				this.dataShot[this.rowSelected][this.colSelected].set = true
 			}
 		},
 		selectedY(newValue) {
-			if (
-				this.dataInitialized &&
-				this.rowSelected !== -1 &&
-				this.colSelected !== -1
-			) {
+			if (this.rowSelected !== -1 && this.colSelected !== -1) {
 				this.dataShot[this.rowSelected][this.colSelected].y = newValue
 				this.dataShot[this.rowSelected][this.colSelected].set = true
 			}
