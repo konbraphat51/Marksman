@@ -21,6 +21,7 @@
 		<div class="right">
 			<div class="top">
 				<Inputs
+					v-if="this.colSelected !== -1 && this.rowSelected !== -1"
 					:col="colSelected"
 					:row="rowSelected"
 					:x="selectedX"
@@ -48,6 +49,14 @@
 						}
 					"
 				/>
+				<InputsSum
+					v-else
+					:col="colSelected"
+					:row="rowSelected"
+					:dataShot="dataShot"
+					:comment="commentSelected"
+					@update:comment="(comment) => {}"
+				/>
 			</div>
 			<div class="bottom">
 				<ScoreTable
@@ -68,6 +77,7 @@ import Mark from "./components/Mark.vue"
 import Inputs from "./components/Inputs.vue"
 import ScoreTable from "./components/ScoreTable.vue"
 import ColorPicker from "./components/ColorPicker.vue"
+import InputsSum from "./components/InputsSum.vue"
 
 export default {
 	name: "App",
@@ -76,6 +86,7 @@ export default {
 		Inputs,
 		ScoreTable,
 		ColorPicker,
+		InputsSum,
 	},
 	data() {
 		return {
@@ -103,7 +114,7 @@ export default {
 			],
 		}
 	},
-	beforeMount() {
+	created() {
 		this._InitializeDataShot()
 	},
 	methods: {
