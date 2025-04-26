@@ -58,36 +58,45 @@ export default {
 			const yRelative = (event.clientY - rect.top) / rect.height
 			this.$emit("clickedCoordinates", {x: xRelative, y: yRelative})
 		},
+		_UpdateHoles() {
+			try {
+				if (this.rowSelected !== -1 && this.colSelected !== -1) {
+					this.holes = this.dataShot[this.rowSelected][this.colSelected]
+				} else if (this.rowSelected === -1 && this.colSelected !== -1) {
+					this.holes = []
+					for (let r = 0; r < this.dataShot.length; r++) {
+						this.holes.push(this.dataShot[r][this.colSelected])
+					}
+				} else if (this.rowSelected !== -1 && this.colSelected === -1) {
+					this.holes = []
+					for (let c = 0; c < this.dataShot[0].length; c++) {
+						this.holes.push(this.dataShot[this.rowSelected][c])
+					}
+				} else {
+					this.holes = []
+					for (let r = 0; r < this.dataShot.length; r++) {
+						for (let c = 0; c < this.dataShot[0].length; c++) {
+							this.holes.push(this.dataShot[r][c])
+						}
+					}
+				}
+			} catch (e) {
+				this.holes = []
+			}
+		},
 	},
 	watch: {
 		dataShot: {
 			handler() {
-				try {
-					if (this.rowSelected !== -1 && this.colSelected !== -1) {
-						this.holes = this.dataShot[this.rowSelected][this.colSelected]
-					} else if (this.rowSelected === -1 && this.colSelected !== -1) {
-						this.holes = []
-						for (let r = 0; r < this.dataShot.length; r++) {
-							this.holes.push(this.dataShot[r][this.colSelected])
-						}
-					} else if (this.rowSelected !== -1 && this.colSelected === -1) {
-						this.holes = []
-						for (let c = 0; c < this.dataShot[0].length; c++) {
-							this.holes.push(this.dataShot[this.rowSelected][c])
-						}
-					} else {
-						this.holes = []
-						for (let r = 0; r < this.dataShot.length; r++) {
-							for (let c = 0; c < this.dataShot[0].length; c++) {
-								this.holes.push(this.dataShot[r][c])
-							}
-						}
-					}
-				} catch (e) {
-					this.holes = []
-				}
+				this._UpdateHoles()
 			},
 			deep: true,
+		},
+		rowSelected() {
+			this._UpdateHoles()
+		},
+		colSelected() {
+			this._UpdateHoles()
 		},
 	},
 }
