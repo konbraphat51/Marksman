@@ -20,7 +20,7 @@
 					:row="rowSelected"
 					:x="selectedX"
 					:y="selectedY"
-					v-model:scoreX10="scoreX10"
+					v-model:scoreX10="scoreX10Selected"
 				/>
 			</div>
 			<div class="bottom">
@@ -56,7 +56,7 @@ export default {
 			cols: 10,
 			rowSelected: 0,
 			colSelected: 0,
-			scoreX10: 0,
+			scoreX10Selected: 0,
 			selectedX: 0,
 			selectedY: 0,
 		}
@@ -86,9 +86,16 @@ export default {
 		},
 
 		_OnSelectionChanged() {
-			this.scoreX10 = this.dataShot[this.rowSelected][this.colSelected].scoreX10
-			this.selectedX = this.dataShot[this.rowSelected][this.colSelected].x
-			this.selectedY = this.dataShot[this.rowSelected][this.colSelected].y
+			if (this.rowSelected !== -1 && this.colSelected !== -1) {
+				this.scoreX10Selected =
+					this.dataShot[this.rowSelected][this.colSelected].scoreX10
+				this.selectedX = this.dataShot[this.rowSelected][this.colSelected].x
+				this.selectedY = this.dataShot[this.rowSelected][this.colSelected].y
+			} else {
+				this.scoreX10Selected = 0
+				this.selectedX = 0
+				this.selectedY = 0
+			}
 		},
 	},
 	watch: {
