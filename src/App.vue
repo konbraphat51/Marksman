@@ -20,7 +20,6 @@ export default {
 	mounted() {
 		this._InitializeDataShot()
 	},
-	setup() {},
 	methods: {
 		_InitializeDataShot() {
 			this.dataShot = []
