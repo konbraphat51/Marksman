@@ -55,7 +55,14 @@
 					:row="rowSelected"
 					:dataShot="dataShot"
 					:comment="commentSelected"
-					@update:comment="(comment) => {}"
+					@update:comment="
+						(comment) => {
+							this.commentSelected = comment
+							this.sumComments[
+								this._GetSumIndex(this.rowSelected, this.colSelected)
+							] = comment
+						}
+					"
 				/>
 			</div>
 			<div class="bottom">
@@ -100,6 +107,7 @@ export default {
 			selectedX: 0,
 			selectedY: 0,
 			commentSelected: "",
+			sumComments: [], // row -> column -> all
 			colors: [
 				"#FF0000",
 				"#00FF00",
@@ -116,6 +124,7 @@ export default {
 	},
 	created() {
 		this._InitializeDataShot()
+		this._InitializeSumComments()
 	},
 	methods: {
 		_InitializeDataShot() {
@@ -137,7 +146,9 @@ export default {
 				}
 			}
 		},
-
+		_InitializeSumComments() {
+			this.sumComments = new Array(this.rows + this.cols + 1).fill("")
+		},
 		_OnSelectionChanged() {
 			if (this.rowSelected !== -1 && this.colSelected !== -1) {
 				this.scoreX10Selected =
@@ -152,7 +163,19 @@ export default {
 				this.selectedX = 0
 				this.selectedY = 0
 				this.oxSelected = ""
-				this.commentSelected = ""
+				this.commentSelected =
+					this.sumComments[
+						this._GetSumIndex(this.rowSelected, this.colSelected)
+					]
+			}
+		},
+		_GetSumIndex(row, col) {
+			if (row === -1 && col !== -1) {
+				return this.rows + col
+			} else if (row !== -1 && col === -1) {
+				return row
+			} else {
+				return this.rows + this.cols
 			}
 		},
 	},
