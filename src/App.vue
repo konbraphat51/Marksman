@@ -1,13 +1,22 @@
 <template>
 	<div class="upper-container">
 		<div class="left">
-			<Mark />
+			<Mark
+				@clickedCoordinates="
+					(coordinates) => {
+						this.selectedX = coordinates.x
+						this.selectedY = coordinates.y
+					}
+				"
+			/>
 		</div>
 		<div class="right">
 			<div class="top">
 				<Inputs
 					:col="colSelected"
 					:row="rowSelected"
+					:x="selectedX"
+					:y="selectedY"
 					v-model:scoreX10="scoreX10"
 				/>
 			</div>
@@ -45,6 +54,8 @@ export default {
 			rowSelected: 0,
 			colSelected: 0,
 			scoreX10: 0,
+			selectedX: 0,
+			selectedY: 0,
 		}
 	},
 	mounted() {
@@ -73,12 +84,24 @@ export default {
 
 		_OnSelectionChanged() {
 			this.scoreX10 = this.dataShot[this.rowSelected][this.colSelected].scoreX10
+			this.selectedX = this.dataShot[this.rowSelected][this.colSelected].x
+			this.selectedY = this.dataShot[this.rowSelected][this.colSelected].y
 		},
 	},
 	watch: {
 		scoreX10(newValue) {
 			if (this.dataInitialized) {
 				this.dataShot[this.rowSelected][this.colSelected].scoreX10 = newValue
+			}
+		},
+		selectedX(newValue) {
+			if (this.dataInitialized) {
+				this.dataShot[this.rowSelected][this.colSelected].x = newValue
+			}
+		},
+		selectedY(newValue) {
+			if (this.dataInitialized) {
+				this.dataShot[this.rowSelected][this.colSelected].y = newValue
 			}
 		},
 		rowSelected(newValue) {

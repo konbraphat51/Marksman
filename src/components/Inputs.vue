@@ -15,6 +15,10 @@
 				step="0.1"
 			/>
 		</div>
+		<div class="coordinates-view">
+			<div class="coordinates-value">X: {{ x.toFixed(3) }}</div>
+			<div class="coordinates-value">Y: {{ y.toFixed(3) }}</div>
+		</div>
 	</div>
 </template>
 
@@ -24,6 +28,8 @@ export default {
 	props: {
 		col: Number,
 		row: Number,
+		x: Number,
+		y: Number,
 		scoreX10: Number,
 	},
 	emits: ["update:scoreX10"],
@@ -72,5 +78,16 @@ export default {
 	height: 50%;
 	width: 40%;
 	margin-left: 5px;
+}
+
+.coordinates-view {
+	display: flex;
+	flex-direction: column;
+	width: 10%;
+	height: 100%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding-left: 2px;
 }
 </style>

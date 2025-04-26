@@ -1,6 +1,6 @@
 <template>
 	<div class="mark-container">
-		<svg xmlns="http://www.w3.org/2000/svg">
+		<svg xmlns="http://www.w3.org/2000/svg" @click="_OnClicked">
 			<circle
 				v-for="(radius, index) in radius"
 				:r="radius + '%'"
@@ -28,7 +28,16 @@ export default {
 			radius: [45, 41, 37, 33, 29, 25, 21, 17, 13, 9, 5],
 		}
 	},
-	methods: {},
+	emits: ["clickedCoordinates"],
+	methods: {
+		_OnClicked(event) {
+			const svg = event.currentTarget
+			const rect = svg.getBoundingClientRect()
+			const xRelative = (event.clientX - rect.left) / rect.width
+			const yRelative = (event.clientY - rect.top) / rect.height
+			this.$emit("clickedCoordinates", {x: xRelative, y: yRelative})
+		},
+	},
 }
 </script>
 
