@@ -15,6 +15,8 @@ export default {
 			dataShot: [],
 			rows: 6,
 			cols: 10,
+			rowSelected: 0,
+			colSelected: 0,
 		}
 	},
 	mounted() {
