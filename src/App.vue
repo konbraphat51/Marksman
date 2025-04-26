@@ -5,7 +5,11 @@
 		</div>
 		<div class="right">
 			<div class="top">
-				<Inputs :col="colSelected" :row="rowSelected" />
+				<Inputs
+					:col="colSelected"
+					:row="rowSelected"
+					v-model:scoreX10="scoreX10"
+				/>
 			</div>
 			<div class="bottom">
 				<ScoreTable
@@ -35,10 +39,12 @@ export default {
 	data() {
 		return {
 			dataShot: [],
+			dataInitialized: false,
 			rows: 6,
 			cols: 10,
 			rowSelected: 0,
 			colSelected: 0,
+			scoreX10: 0,
 		}
 	},
 	mounted() {
@@ -57,10 +63,29 @@ export default {
 						set: false,
 						x: 0,
 						y: 0,
-						score: 0,
+						scoreX10: 0,
 					})
 				}
 			}
+
+			this.dataInitialized = true
+		},
+
+		_OnSelectionChanged() {
+			this.scoreX10 = this.dataShot[this.rowSelected][this.colSelected].scoreX10
+		},
+	},
+	watch: {
+		scoreX10(newValue) {
+			if (this.dataInitialized) {
+				this.dataShot[this.rowSelected][this.colSelected].scoreX10 = newValue
+			}
+		},
+		rowSelected(newValue) {
+			this._OnSelectionChanged()
+		},
+		colSelected(newValue) {
+			this._OnSelectionChanged()
 		},
 	},
 }

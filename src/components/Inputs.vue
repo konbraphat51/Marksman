@@ -4,6 +4,17 @@
 			<div class="col-view">col: {{ col + 1 }}</div>
 			<div class="row-view">row: {{ row + 1 }}</div>
 		</div>
+		<div class="score-input">
+			<div class="score-input-label">Score:</div>
+			<input
+				type="number"
+				:value="score"
+				@input="$emit('update:scoreX10', $event.target.value * 10)"
+				min="0"
+				max="10.9"
+				step="0.1"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -11,19 +22,27 @@
 export default {
 	name: "Inputs",
 	props: {
-		dataShot: Array,
 		col: Number,
 		row: Number,
+		scoreX10: Number,
 	},
+	emits: ["update:scoreX10"],
 	data() {
 		return {}
 	},
 	methods: {},
+	computed: {
+		score() {
+			return (this.scoreX10 / 10).toFixed(1)
+		},
+	},
 }
 </script>
 
 <style scoped>
 .input-container {
+	display: flex;
+	flex-direction: row;
 	width: 100%;
 	height: 100%;
 	background-color: aqua;

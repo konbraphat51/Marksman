@@ -23,7 +23,7 @@
 							selected: rowIndex === rowSelected && colIndex === colSelected,
 						}"
 					>
-						0
+						{{ GetDatum(rowIndex, colIndex, "scoreX10") / 10 || 0 }}
 					</td>
 					<td
 						class="cell total-row"
@@ -82,6 +82,15 @@ export default {
 		rowSelected: Number,
 	},
 	emits: ["update:colSelected", "update:rowSelected"],
+	methods: {
+		GetDatum(row, col, key) {
+			try {
+				return this.dataShot[row][col][key]
+			} catch (e) {
+				return null
+			}
+		},
+	},
 }
 </script>
 
