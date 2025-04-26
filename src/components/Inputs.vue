@@ -15,6 +15,31 @@
 				step="0.1"
 			/>
 		</div>
+		<div class="ox-input">
+			<div class="o">
+				<input
+					type="radio"
+					name="ox"
+					@input="$emit('update:ox', $event.target.value)"
+					id="o"
+					value="o"
+					:checked="ox === 'o'"
+				/>
+				<label for="o">O</label>
+			</div>
+
+			<div class="x">
+				<input
+					type="radio"
+					name="ox"
+					@input="$emit('update:ox', $event.target.value)"
+					id="x"
+					value="x"
+					:checked="ox === 'x'"
+				/>
+				<label for="x">X</label>
+			</div>
+		</div>
 		<div class="coordinates-view">
 			<div class="coordinates-value">X: {{ x.toFixed(3) }}</div>
 			<div class="coordinates-value">Y: {{ y.toFixed(3) }}</div>
@@ -31,8 +56,9 @@ export default {
 		x: Number,
 		y: Number,
 		scoreX10: Number,
+		ox: String,
 	},
-	emits: ["update:scoreX10"],
+	emits: ["update:scoreX10", "update:ox"],
 	data() {
 		return {}
 	},
@@ -81,6 +107,18 @@ export default {
 	width: 45px;
 	margin-left: 2px;
 	margin-right: 3px;
+}
+
+.ox-input {
+	display: flex;
+	flex-direction: column;
+	width: auto;
+	height: 100%;
+	border-style: solid;
+	border-color: black;
+	border-width: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
 }
 
 .coordinates-view {

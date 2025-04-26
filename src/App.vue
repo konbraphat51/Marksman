@@ -31,6 +31,13 @@
 							this.dataShot[this.rowSelected][this.colSelected].scoreX10 = score
 						}
 					"
+					:ox="oxSelected"
+					@update:ox="
+						(ox) => {
+							oxSelected = ox
+							this.dataShot[this.rowSelected][this.colSelected].ox = ox
+						}
+					"
 				/>
 			</div>
 			<div class="bottom">
@@ -66,6 +73,7 @@ export default {
 			rowSelected: 0,
 			colSelected: 0,
 			scoreX10Selected: 0,
+			oxSelected: "",
 			selectedX: 0,
 			selectedY: 0,
 		}
@@ -87,6 +95,7 @@ export default {
 						x: 0,
 						y: 0,
 						scoreX10: 0,
+						ox: "",
 					})
 				}
 			}
@@ -98,10 +107,12 @@ export default {
 					this.dataShot[this.rowSelected][this.colSelected].scoreX10
 				this.selectedX = this.dataShot[this.rowSelected][this.colSelected].x
 				this.selectedY = this.dataShot[this.rowSelected][this.colSelected].y
+				this.oxSelected = this.dataShot[this.rowSelected][this.colSelected].ox
 			} else {
 				this.scoreX10Selected = 0
 				this.selectedX = 0
 				this.selectedY = 0
+				this.oxSelected = ""
 			}
 		},
 	},
@@ -135,7 +146,7 @@ export default {
 }
 
 .top {
-	height: 35px;
+	height: 40px;
 }
 
 .bottom {
