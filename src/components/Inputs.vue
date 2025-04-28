@@ -9,7 +9,7 @@
 			<input
 				type="number"
 				:value="score"
-				@input="$emit('update:scoreX10', $event.target.value * 10)"
+				@keydown.enter="$emit('update:scoreX10', $event.target.value * 10)"
 				min="0"
 				max="10.9"
 				step="0.1"
