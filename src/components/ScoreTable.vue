@@ -15,19 +15,21 @@
 						class="cell"
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
-						@click="
+						@click.left="
 							$emit('update:rowSelected', rowIndex),
 								$emit('update:colSelected', colIndex)
 						"
+						@click.right.prevent="this._ToggleHighlight(rowIndex, colIndex)"
 						:class="{
 							selected: rowIndex === rowSelected && colIndex === colSelected,
+							highlighted: this._IsHighlighted(rowIndex, colIndex),
 						}"
 					>
 						{{ GetDatum(rowIndex, colIndex, "scoreX10") / 10 || 0 }}
 					</td>
 					<td
 						class="cell total-row"
-						@click="
+						@click.left="
 							$emit('update:rowSelected', rowIndex),
 								$emit('update:colSelected', -1)
 						"
@@ -44,7 +46,7 @@
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
 						class="cell total-column"
-						@click="
+						@click.left="
 							$emit('update:rowSelected', -1),
 								$emit('update:colSelected', colIndex)
 						"
@@ -56,7 +58,7 @@
 					</td>
 					<td
 						class="cell total-all"
-						@click="
+						@click.left="
 							$emit('update:rowSelected', -1), $emit('update:colSelected', -1)
 						"
 						:class="{
@@ -86,6 +88,7 @@ export default {
 			columnSums: [],
 			rowSums: [],
 			totalSum: 0,
+			highlight: [],
 		}
 	},
 	emits: ["update:colSelected", "update:rowSelected"],
@@ -115,6 +118,20 @@ export default {
 					}
 				}
 			}
+		},
+		_ToggleHighlight(row, col) {
+			const index = this.highlight.findIndex(
+				(item) => item[0] === row && item[1] === col,
+			)
+			if (index !== -1) {
+				this.highlight.splice(index, 1)
+			} else {
+				this.highlight.push([row, col])
+				console.log(this.highlight)
+			}
+		},
+		_IsHighlighted(row, col) {
+			return this.highlight.some((item) => item[0] === row && item[1] === col)
 		},
 	},
 	watch: {
@@ -151,6 +168,10 @@ export default {
 }
 
 .ScoreTable td.selected {
-	background-color: yellow; /* Highlight selected cell */
+	background-color: yellow;
+}
+
+.ScoreTable td.highlighted {
+	background-color: rgb(248, 181, 228);
 }
 </style>
