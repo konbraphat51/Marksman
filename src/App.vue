@@ -244,7 +244,7 @@ export default {
 }
 
 .top {
-	height: 40px;
+	height: 60px;
 }
 
 .bottom {
