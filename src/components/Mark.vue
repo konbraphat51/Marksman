@@ -22,7 +22,7 @@
 			<!-- area number -->
 			<svg v-for="(radius, index) in radiuses" :key="index">
 				<text
-					v-if="radius > 7"
+					v-if="radius > 10"
 					font-size="10"
 					:x="50 - radius + 2 + '%'"
 					y="51%"
@@ -111,9 +111,32 @@ export default {
 	computed: {
 		radiuses() {
 			if (this.guntype === "AR") {
-				return [45, 40, 35, 30, 25, 20, 15, 10, 5, 1]
+				return [
+					95, //1
+					85, //2
+					75, //3
+					65, //4
+					55, //5
+					45, //6
+					35, //7
+					25, //8
+					10, //9
+					2, //10
+				]
 			} else if (this.guntype === "SB") {
-				return [45, 41, 37, 33, 29, 25, 21, 17, 13, 4, 2]
+				return [
+					95, //1
+					85, //2
+					75, //3
+					65, //4
+					55, //5
+					45, //6
+					35, //7
+					25, //8
+					15, //9
+					8, //10
+					5, //11
+				]
 			} else {
 				return [45, 25, 5, 1]
 			}
