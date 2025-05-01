@@ -9,7 +9,7 @@
 			<input
 				type="number"
 				:value="score"
-				@keydown.enter="$emit('update:scoreX10', $event.target.value * 10)"
+				@input="$emit('update:scoreX10', $event.target.value * 10)"
 				min="0"
 				max="10.9"
 				step="0.1"
@@ -73,7 +73,7 @@ export default {
 	methods: {},
 	computed: {
 		score() {
-			return (this.scoreX10 / 10).toFixed(1)
+			return this.scoreX10 / 10
 		},
 	},
 }
