@@ -118,13 +118,22 @@ export default {
 			this.rowSums = Array(this.rows).fill(0)
 			this.totalSum = 0
 
+			let prep = true
+
 			for (let r = 0; r < this.rows; r++) {
+				if (r >= this.prepRows) {
+					prep = false
+				}
+
 				for (let c = 0; c < this.cols; c++) {
 					const scoreX10 = this.GetDatum(r, c, "scoreX10")
 					if (scoreX10) {
-						this.columnSums[c] += scoreX10
 						this.rowSums[r] += scoreX10
-						this.totalSum += scoreX10
+
+						if (!prep) {
+							this.totalSum += scoreX10
+							this.columnSums[c] += scoreX10
+						}
 					}
 				}
 			}
