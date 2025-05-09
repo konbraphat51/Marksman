@@ -27,7 +27,7 @@
 				<input
 					type="radio"
 					name="guntype"
-					id="guntype"
+					id="guntypeAR"
 					value="AR"
 					:checked="metadata.guntype === 'AR'"
 					@input="
@@ -37,14 +37,14 @@
 						})
 					"
 				/>
-				<label for="airgun">AR</label>
+				<label for="AR">AR</label>
 
 				<input
 					type="radio"
 					name="guntype"
-					id="guntype2"
-					value="SB"
-					:checked="metadata.guntype === 'SB'"
+					id="guntype3x20"
+					value="3x20"
+					:checked="metadata.guntype === '3x20'"
 					@input="
 						$emit('update:metadata', {
 							...metadata,
@@ -52,7 +52,22 @@
 						})
 					"
 				/>
-				<label for="shotgun">SB</label>
+				<label for="3x20">3x20</label>
+
+				<input
+					type="radio"
+					name="guntype"
+					id="guntypeP60"
+					value="P60"
+					:checked="metadata.guntype === 'P60'"
+					@input="
+						$emit('update:metadata', {
+							...metadata,
+							guntype: $event.target.value,
+						})
+					"
+				/>
+				<label for="P60">P60</label>
 			</div>
 		</div>
 	</div>

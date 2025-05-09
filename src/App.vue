@@ -72,6 +72,7 @@
 					:rows="rows"
 					:cols="cols"
 					:prepRows="prepRows"
+					:guntype="metadata.guntype"
 					v-model:rowSelected="rowSelected"
 					v-model:colSelected="colSelected"
 				/>
@@ -227,10 +228,11 @@ export default {
 		"metadata.guntype": function (newValue) {
 			switch (newValue) {
 				case "AR":
+				case "P60":
 					this.rows = 8
 					this.prepRows = [0, 1]
 					break
-				case "SB":
+				case "3x20":
 					this.rows = 12
 					this.prepRows = [0, 1, 4, 5, 8, 9]
 					break

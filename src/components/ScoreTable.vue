@@ -83,6 +83,7 @@ export default {
 		cols: Number,
 		rows: Number,
 		prepRows: Array,
+		guntype: String,
 		colSelected: Number,
 		rowSelected: Number,
 	},
@@ -107,28 +108,23 @@ export default {
 			}
 		},
 		GetRowTitle(rowIndex) {
-			if (this.prepRows.includes(rowIndex)) {
-				// is preprow
-				switch (this.prepRows.length) {
-					case 2:
+			switch (this.guntype) {
+				case "AR":
+				case "P60":
+					if (this.prepRows.includes(rowIndex)) {
 						return `Preparation ${rowIndex + 1}`
-					case 6:
-						let alphabets = ["K", "P", "S"]
-
-						return `Preparation ${alphabets[Math.floor(rowIndex / 4)]}${
-							rowIndex % 2 === 0 ? "1" : "2"
-						}`
-				}
-			} else {
-				// is not preprow
-				let less = 0
-				for (let cnt = 0; cnt < this.prepRows.length; cnt++) {
-					if (this.prepRows[cnt] < rowIndex) {
-						less++
+					} else {
+						return `${rowIndex - this.prepRows.length + 1}`
 					}
-				}
 
-				return `${rowIndex - less + 1}`
+				case "3x20":
+					const alphabet = ["K", "P", "S"][Math.floor(rowIndex / 4)]
+					const number = (rowIndex % 2) + 1
+					if (this.prepRows.includes(rowIndex)) {
+						return `Preparation ${alphabet}${number}`
+					} else {
+						return `${alphabet}${number}`
+					}
 			}
 		},
 		_UpdateSums() {

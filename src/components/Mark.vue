@@ -123,7 +123,7 @@ export default {
 					10, //9
 					2, //10
 				]
-			} else if (this.guntype === "SB") {
+			} else if (this.guntype === "3x20" || this.guntype === "P60") {
 				return [
 					95, //1
 					85, //2
