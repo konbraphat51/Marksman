@@ -25,7 +25,9 @@
 							highlighted: this._IsHighlighted(rowIndex, colIndex),
 						}"
 					>
-						{{ GetDatum(rowIndex, colIndex, "scoreX10") / 10 || 0 }}
+						{{
+							(GetDatum(rowIndex, colIndex, "scoreX10") / 10).toFixed(1) || 0
+						}}
 					</td>
 					<td
 						class="cell total-row"
@@ -37,7 +39,7 @@
 							selected: rowIndex === rowSelected && colSelected === -1,
 						}"
 					>
-						{{ rowSums[rowIndex] / 10 || 0 }}
+						{{ (rowSums[rowIndex] / 10).toFixed(1) || 0 }}
 					</td>
 				</tr>
 				<tr>
@@ -54,7 +56,7 @@
 							selected: rowSelected === -1 && colSelected === colIndex,
 						}"
 					>
-						{{ columnSums[colIndex] / 10 || 0 }}
+						{{ (columnSums[colIndex] / 10).toFixed(1) || 0 }}
 					</td>
 					<td
 						class="cell total-all"
@@ -65,7 +67,7 @@
 							selected: rowSelected === -1 && colSelected === -1,
 						}"
 					>
-						{{ totalSum / 10 || 0 }}
+						{{ (totalSum / 10).toFixed(1) || 0 }}
 					</td>
 				</tr>
 			</tbody>
