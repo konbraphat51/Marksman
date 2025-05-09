@@ -238,6 +238,9 @@ export default {
 					break
 			}
 		},
+		rows() {
+			this._InitializeDataShot()
+		},
 	},
 }
 </script>

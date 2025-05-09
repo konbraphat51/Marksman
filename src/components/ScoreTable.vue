@@ -25,9 +25,7 @@
 							highlighted: this._IsHighlighted(rowIndex, colIndex),
 						}"
 					>
-						{{
-							(GetDatum(rowIndex, colIndex, "scoreX10") / 10).toFixed(1) || 0
-						}}
+						{{ ShowScore(this.GetDatum(rowIndex, colIndex, "scoreX10")) }}
 					</td>
 					<td
 						class="cell total-row"
@@ -39,7 +37,7 @@
 							selected: rowIndex === rowSelected && colSelected === -1,
 						}"
 					>
-						{{ (rowSums[rowIndex] / 10).toFixed(1) || 0 }}
+						{{ ShowRowSum(rowIndex) }}
 					</td>
 				</tr>
 				<tr>
@@ -56,7 +54,7 @@
 							selected: rowSelected === -1 && colSelected === colIndex,
 						}"
 					>
-						{{ (columnSums[colIndex] / 10).toFixed(1) || 0 }}
+						{{ ShowColumnSum(colIndex) }}
 					</td>
 					<td
 						class="cell total-all"
@@ -67,7 +65,7 @@
 							selected: rowSelected === -1 && colSelected === -1,
 						}"
 					>
-						{{ (totalSum / 10).toFixed(1) || 0 }}
+						{{ ShowTotalSum() }}
 					</td>
 				</tr>
 			</tbody>
@@ -128,9 +126,9 @@ export default {
 			}
 		},
 		_UpdateSums() {
-			this.columnSums = Array(this.cols).fill(0)
-			this.rowSums = Array(this.rows).fill(0)
-			this.totalSum = 0
+			this.columnSums = this._FillSumList(this.cols)
+			this.rowSums = this._FillSumList(this.rows)
+			this.totalSum = [0, 0]
 
 			let prep
 
@@ -144,11 +142,15 @@ export default {
 				for (let c = 0; c < this.cols; c++) {
 					const scoreX10 = this.GetDatum(r, c, "scoreX10")
 					if (scoreX10) {
-						this.rowSums[r] += scoreX10
+						this.rowSums[r][0] += scoreX10
+						this.rowSums[r][1] += Math.floor(scoreX10 / 10)
 
 						if (!prep) {
-							this.totalSum += scoreX10
-							this.columnSums[c] += scoreX10
+							this.columnSums[c][0] += scoreX10
+							this.columnSums[c][1] += Math.floor(scoreX10 / 10)
+
+							this.totalSum[0] += scoreX10
+							this.totalSum[1] += Math.floor(scoreX10 / 10)
 						}
 					}
 				}
@@ -167,6 +169,69 @@ export default {
 		},
 		_IsHighlighted(row, col) {
 			return this.highlight.some((item) => item[0] === row && item[1] === col)
+		},
+		_FillSumList(length) {
+			const list = []
+			for (let cnt = 0; cnt < length; cnt++) {
+				list.push([0, 0])
+			}
+			return list
+		},
+		ShowScore(score) {
+			if (score === undefined) {
+				return "x"
+			}
+
+			switch (this.guntype) {
+				case "AR":
+				case "P60":
+					return `${(score / 10).toFixed(1)}`
+				case "3x20":
+					return `${Math.floor(score / 10)} (${(score / 10).toFixed(1)})`
+			}
+		},
+		ShowRowSum(rowIndex) {
+			try {
+				switch (this.guntype) {
+					case "AR":
+					case "P60":
+						return `${(this.rowSums[rowIndex][0] / 10).toFixed(1)}`
+					case "3x20":
+						return `${this.rowSums[rowIndex][1]} (${(
+							this.rowSums[rowIndex][0] / 10
+						).toFixed(1)})`
+				}
+			} catch (e) {
+				return ""
+			}
+		},
+		ShowColumnSum(colIndex) {
+			try {
+				switch (this.guntype) {
+					case "AR":
+					case "P60":
+						return `${(this.columnSums[colIndex][0] / 10).toFixed(1)}`
+					case "3x20":
+						return `${this.columnSums[colIndex][1]} (${(
+							this.columnSums[colIndex][0] / 10
+						).toFixed(1)})`
+				}
+			} catch (e) {
+				return ""
+			}
+		},
+		ShowTotalSum() {
+			try {
+				switch (this.guntype) {
+					case "AR":
+					case "P60":
+						return `${(this.totalSum[0] / 10).toFixed(1)}`
+					case "3x20":
+						return `${this.totalSum[1]} (${(this.totalSum[0] / 10).toFixed(1)})`
+				}
+			} catch (e) {
+				return ""
+			}
 		},
 	},
 	watch: {
