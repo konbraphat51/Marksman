@@ -113,7 +113,7 @@ export default {
 	data() {
 		return {
 			dataShot: [],
-			prepRows: 2,
+			prepRows: [0, 1],
 			rows: 8,
 			cols: 10,
 			rowSelected: 0,
@@ -223,6 +223,18 @@ export default {
 		},
 		colSelected(newValue) {
 			this._OnSelectionChanged()
+		},
+		"metadata.guntype": function (newValue) {
+			switch (newValue) {
+				case "AR":
+					this.rows = 8
+					this.prepRows = [0, 1]
+					break
+				case "SB":
+					this.rows = 12
+					this.prepRows = [0, 1, 4, 5, 8, 9]
+					break
+			}
 		},
 	},
 }

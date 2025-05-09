@@ -82,7 +82,7 @@ export default {
 		dataShot: Array,
 		cols: Number,
 		rows: Number,
-		prepRows: Number,
+		prepRows: Array,
 		colSelected: Number,
 		rowSelected: Number,
 	},
@@ -107,10 +107,28 @@ export default {
 			}
 		},
 		GetRowTitle(rowIndex) {
-			if (rowIndex < this.prepRows) {
-				return `Preparation ${rowIndex + 1}`
+			if (this.prepRows.includes(rowIndex)) {
+				// is preprow
+				switch (this.prepRows.length) {
+					case 2:
+						return `Preparation ${rowIndex + 1}`
+					case 6:
+						let alphabets = ["K", "P", "S"]
+
+						return `Preparation ${alphabets[Math.floor(rowIndex / 4)]}${
+							rowIndex % 2 === 0 ? "1" : "2"
+						}`
+				}
 			} else {
-				return `${rowIndex - this.prepRows + 1}`
+				// is not preprow
+				let less = 0
+				for (let cnt = 0; cnt < this.prepRows.length; cnt++) {
+					if (this.prepRows[cnt] < rowIndex) {
+						less++
+					}
+				}
+
+				return `${rowIndex - less + 1}`
 			}
 		},
 		_UpdateSums() {
@@ -118,10 +136,12 @@ export default {
 			this.rowSums = Array(this.rows).fill(0)
 			this.totalSum = 0
 
-			let prep = true
+			let prep
 
 			for (let r = 0; r < this.rows; r++) {
-				if (r >= this.prepRows) {
+				if (this.prepRows.includes(r)) {
+					prep = true
+				} else {
 					prep = false
 				}
 
