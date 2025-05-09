@@ -10,7 +10,7 @@
 			</thead>
 			<tbody>
 				<tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-					<td>{{ rowIndex + 1 }}</td>
+					<td>{{ GetRowTitle(rowIndex) }}</td>
 					<td
 						class="cell"
 						v-for="(col, colIndex) in cols"
@@ -82,6 +82,7 @@ export default {
 		dataShot: Array,
 		cols: Number,
 		rows: Number,
+		prepRows: Number,
 		colSelected: Number,
 		rowSelected: Number,
 	},
@@ -103,6 +104,13 @@ export default {
 				return this.dataShot[row][col][key]
 			} catch (e) {
 				return null
+			}
+		},
+		GetRowTitle(rowIndex) {
+			if (rowIndex < this.prepRows) {
+				return `Preparation ${rowIndex + 1}`
+			} else {
+				return `${rowIndex - this.prepRows + 1}`
 			}
 		},
 		_UpdateSums() {

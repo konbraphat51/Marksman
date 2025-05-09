@@ -71,6 +71,7 @@
 					:dataShot="dataShot"
 					:rows="rows"
 					:cols="cols"
+					:prepRows="prepRows"
 					v-model:rowSelected="rowSelected"
 					v-model:colSelected="colSelected"
 				/>
@@ -112,7 +113,8 @@ export default {
 	data() {
 		return {
 			dataShot: [],
-			rows: 6,
+			prepRows: 2,
+			rows: 8,
 			cols: 10,
 			rowSelected: 0,
 			colSelected: 0,
