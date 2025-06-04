@@ -7,6 +7,7 @@
 					<th v-for="(col, index) in cols" :key="index">{{ index + 1 }}</th>
 					<th>Total</th>
 					<th>Time Finished</th>
+					<th>Time Diff (s)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -47,6 +48,9 @@
 							@input="onTimeInput($event, rowIndex)"
 						/>
 					</td>
+					<td class="cell time-diff">
+						{{ getTimeDiff(rowIndex) }}
+					</td>
 				</tr>
 				<tr>
 					<td>Total</td>
@@ -76,6 +80,7 @@
 						{{ ShowTotalSum() }}
 					</td>
 					<td class="cell time-finished"></td>
+					<td class="cell time-diff"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -247,6 +252,23 @@ export default {
 			const newTimes = this.timesFinished.slice()
 			newTimes[rowIndex] = event.target.value
 			this.$emit("update:timesFinished", newTimes)
+		},
+		getTimeDiff(rowIndex) {
+			if (rowIndex === 0) return ""
+			const prev = this.timesFinished[rowIndex - 1]
+			const curr = this.timesFinished[rowIndex]
+			if (!prev || !curr) return ""
+			// Parse as HH:mm or HH:mm:ss
+			const parse = (t) => {
+				if (!t) return null
+				const parts = t.split(":").map(Number)
+				if (parts.length < 2) return null
+				return parts[0] * 3600 + parts[1] * 60 + (parts[2] || 0)
+			}
+			const prevSec = parse(prev)
+			const currSec = parse(curr)
+			if (prevSec == null || currSec == null) return ""
+			return currSec - prevSec
 		},
 	},
 	watch: {
