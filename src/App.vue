@@ -75,6 +75,8 @@
 					:guntype="metadata.guntype"
 					v-model:rowSelected="rowSelected"
 					v-model:colSelected="colSelected"
+					:timesFinished="timesFinished"
+					@update:timesFinished="timesFinished = $event"
 				/>
 			</div>
 		</div>
@@ -144,11 +146,13 @@ export default {
 				time: "",
 				guntype: "AR",
 			},
+			timesFinished: new Array(this.rows).fill(""),
 		}
 	},
 	created() {
 		this._InitializeDataShot()
 		this._InitializeSumComments()
+		this._InitializeTimesFinished()
 	},
 	methods: {
 		DecompressJson(json) {
@@ -156,6 +160,7 @@ export default {
 			this.dataShot = json.dataShot
 			this.colors = json.colors
 			this.sumComments = json.sumComments
+			this.timesFinished = json.timesFinished
 		},
 		_InitializeDataShot() {
 			this.dataShot = []
@@ -178,6 +183,9 @@ export default {
 		},
 		_InitializeSumComments() {
 			this.sumComments = new Array(this.rows + this.cols + 1).fill("")
+		},
+		_InitializeTimesFinished() {
+			this.timesFinished = new Array(this.rows).fill("")
 		},
 		_OnSelectionChanged() {
 			if (this.rowSelected !== -1 && this.colSelected !== -1) {
@@ -216,6 +224,7 @@ export default {
 				dataShot: this.dataShot,
 				colors: this.colors,
 				sumComments: this.sumComments,
+				timesFinished: this.timesFinished,
 			}
 		},
 	},
@@ -239,8 +248,9 @@ export default {
 					break
 			}
 		},
-		rows() {
+		rows(newValue) {
 			this._InitializeDataShot()
+			this._InitializeTimesFinished()
 		},
 	},
 }

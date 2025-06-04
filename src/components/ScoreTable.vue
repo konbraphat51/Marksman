@@ -6,6 +6,7 @@
 					<th></th>
 					<th v-for="(col, index) in cols" :key="index">{{ index + 1 }}</th>
 					<th>Total</th>
+					<th>Time Finished</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -39,6 +40,13 @@
 					>
 						{{ ShowRowSum(rowIndex) }}
 					</td>
+					<td class="cell time-finished">
+						<input
+							type="time"
+							:value="timesFinished[rowIndex]"
+							@input="onTimeInput($event, rowIndex)"
+						/>
+					</td>
 				</tr>
 				<tr>
 					<td>Total</td>
@@ -67,6 +75,7 @@
 					>
 						{{ ShowTotalSum() }}
 					</td>
+					<td class="cell time-finished"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -84,7 +93,9 @@ export default {
 		guntype: String,
 		colSelected: Number,
 		rowSelected: Number,
+		timesFinished: Array,
 	},
+	emits: ["update:colSelected", "update:rowSelected", "update:timesFinished"],
 	data() {
 		return {
 			columnSums: [],
@@ -93,7 +104,6 @@ export default {
 			highlight: [],
 		}
 	},
-	emits: ["update:colSelected", "update:rowSelected"],
 	beforeMount() {
 		this._UpdateSums()
 	},
@@ -158,7 +168,7 @@ export default {
 		},
 		_ToggleHighlight(row, col) {
 			const index = this.highlight.findIndex(
-				(item) => item[0] === row && item[1] === col,
+				(item) => item[0] === row && item[1] === col
 			)
 			if (index !== -1) {
 				this.highlight.splice(index, 1)
@@ -232,6 +242,11 @@ export default {
 			} catch (e) {
 				return ""
 			}
+		},
+		onTimeInput(event, rowIndex) {
+			const newTimes = this.timesFinished.slice()
+			newTimes[rowIndex] = event.target.value
+			this.$emit("update:timesFinished", newTimes)
 		},
 	},
 	watch: {
