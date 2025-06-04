@@ -7,7 +7,10 @@
 					type="text"
 					:value="metadata.match"
 					@input="
-						$emit('update:metadata', {...metadata, match: $event.target.value})
+						$emit('update:metadata', {
+							...metadata,
+							match: $event.target.value,
+						})
 					"
 				/>
 			</div>
@@ -17,7 +20,17 @@
 					type="date"
 					:value="metadata.date"
 					@input="
-						$emit('update:metadata', {...metadata, date: $event.target.value})
+						$emit('update:metadata', { ...metadata, date: $event.target.value })
+					"
+				/>
+			</div>
+			<div class="time-input">
+				<label for="time">Time Started: </label>
+				<input
+					type="time"
+					:value="metadata.time"
+					@input="
+						$emit('update:metadata', { ...metadata, time: $event.target.value })
 					"
 				/>
 			</div>

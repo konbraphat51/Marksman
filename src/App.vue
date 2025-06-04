@@ -141,6 +141,7 @@ export default {
 			metadata: {
 				match: "",
 				date: "",
+				time: "",
 				guntype: "AR",
 			},
 		}
