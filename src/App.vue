@@ -76,6 +76,7 @@
 					v-model:rowSelected="rowSelected"
 					v-model:colSelected="colSelected"
 					:timesFinished="timesFinished"
+					:metadata="metadata"
 					@update:timesFinished="timesFinished = $event"
 				/>
 			</div>

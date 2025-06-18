@@ -100,6 +100,7 @@ export default {
 		colSelected: Number,
 		rowSelected: Number,
 		timesFinished: Array,
+		metadata: Object, // <-- add metadata prop
 	},
 	emits: ["update:colSelected", "update:rowSelected", "update:timesFinished"],
 	data() {
@@ -255,9 +256,15 @@ export default {
 			this.$emit("update:timesFinished", newTimes)
 		},
 		getTimeDiff(rowIndex) {
-			if (rowIndex === 0) return ""
-			const prev = this.timesFinished[rowIndex - 1]
-			const curr = this.timesFinished[rowIndex]
+			let prev, curr
+			if (rowIndex === 0) {
+				if (!this.metadata || !this.metadata.time) return ""
+				prev = this.metadata.time
+				curr = this.timesFinished[0]
+			} else {
+				prev = this.timesFinished[rowIndex - 1]
+				curr = this.timesFinished[rowIndex]
+			}
 			if (!prev || !curr) return ""
 			// Parse as HH:mm or HH:mm:ss
 			const parse = (t) => {
