@@ -7,7 +7,7 @@
 					<th v-for="(col, index) in cols" :key="index">{{ index + 1 }}</th>
 					<th>Total</th>
 					<th>Time Finished</th>
-					<th>Time Diff (s)</th>
+					<th>Time Diff (mins)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -173,7 +173,7 @@ export default {
 		},
 		_ToggleHighlight(row, col) {
 			const index = this.highlight.findIndex(
-				(item) => item[0] === row && item[1] === col
+				(item) => item[0] === row && item[1] === col,
 			)
 			if (index !== -1) {
 				this.highlight.splice(index, 1)
@@ -268,7 +268,11 @@ export default {
 			const prevSec = parse(prev)
 			const currSec = parse(curr)
 			if (prevSec == null || currSec == null) return ""
-			return currSec - prevSec
+			const diff = currSec - prevSec
+			if (diff < 0) return ""
+			const mm = Math.floor(diff / 60)
+			const ss = diff % 60
+			return `${mm.toString()}`
 		},
 	},
 	watch: {
