@@ -44,6 +44,7 @@
 					<td class="cell time-finished">
 						<input
 							type="time"
+							step="10"
 							:value="timesFinished[rowIndex]"
 							@input="onTimeInput($event, rowIndex)"
 						/>
@@ -272,7 +273,7 @@ export default {
 			if (diff < 0) return ""
 			const mm = Math.floor(diff / 60)
 			const ss = diff % 60
-			return `${mm.toString()}`
+			return `${mm.toString()}:${ss.toString().padStart(2, "0")}`
 		},
 	},
 	watch: {
