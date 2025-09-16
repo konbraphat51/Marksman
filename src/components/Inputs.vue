@@ -6,14 +6,18 @@
 		</div>
 		<div class="score-input">
 			<div class="score-input-label">Score:</div>
-			<input
-				type="number"
-				:value="score"
-				@input="$emit('update:scoreX10', $event.target.value * 10)"
-				min="0"
-				max="10.9"
-				step="0.1"
-			/>
+			<select
+				:value="scoreX10"
+				@change="$emit('update:scoreX10', parseInt($event.target.value))"
+			>
+				<option 
+					v-for="i in 110" 
+					:key="109-(i-1)" 
+					:value="109-(i-1)"
+				>
+					{{ ((109-(i-1)) / 10).toFixed(1) }}
+				</option>
+			</select>
 		</div>
 		<div class="ox-input">
 			<div class="o">
@@ -110,9 +114,9 @@ export default {
 	padding-left: 2px;
 }
 
-.score-input input {
+.score-input select {
 	height: 50%;
-	width: 45px;
+	width: 60px;
 	margin-left: 2px;
 	margin-right: 3px;
 }
