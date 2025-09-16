@@ -17,6 +17,7 @@
 				:colSelected="colSelected"
 				:colors="colors"
 				:guntype="metadata.guntype"
+				:multipleSelection="multipleSelection"
 			/>
 		</div>
 		<div class="right">

@@ -56,6 +56,7 @@ export default {
 		colSelected: Number,
 		colors: Array,
 		guntype: String,
+		multipleSelection: Array,
 	},
 	data() {
 		return {
@@ -74,6 +75,7 @@ export default {
 		_UpdateHoles() {
 			let holes = []
 			try {
+				// add selected cell
 				if (this.rowSelected !== -1 && this.colSelected !== -1) {
 					if (this.dataShot[this.rowSelected][this.colSelected].set) {
 						holes.push(this.dataShot[this.rowSelected][this.colSelected])
@@ -101,6 +103,27 @@ export default {
 				}
 			} catch (e) {
 				holes = []
+			}
+			try{
+				// multiple selection cells
+				for (let cnt = 0; cnt < this.multipleSelection.length; cnt++) {
+					const row = this.multipleSelection[cnt][0]
+					const col = this.multipleSelection[cnt][1]
+					
+					if (
+						row >= 0 &&
+						row < this.dataShot.length &&
+						col >= 0 &&
+						col < this.dataShot[0].length
+					) {
+						console.log(this.multipleSelection[cnt])
+						if (this.dataShot[row][col].set) {
+							holes.push(this.dataShot[row][col])
+						}
+					}
+				}
+			} catch(e) {
+				// do nothing
 			}
 			this.holes = holes
 		},
@@ -155,6 +178,12 @@ export default {
 		colSelected() {
 			this._UpdateHoles()
 		},
+		multipleSelection: {
+			handler() {
+				this._UpdateHoles()
+			},
+			deep: true,
+		}
 	},
 }
 </script>
