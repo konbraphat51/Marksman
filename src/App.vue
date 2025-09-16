@@ -77,7 +77,10 @@
 					v-model:colSelected="colSelected"
 					:timesFinished="timesFinished"
 					:metadata="metadata"
+					:multipleSelection="multipleSelection"
 					@update:timesFinished="timesFinished = $event"
+					@onSelectedMultiple="this.multipleSelection.push($event)"
+					@onSelected="this.multipleSelection = []"
 				/>
 			</div>
 		</div>
@@ -148,6 +151,7 @@ export default {
 				guntype: "AR",
 			},
 			timesFinished: new Array(this.rows).fill(""),
+			multipleSelection: [], // for ctrl+click
 		}
 	},
 	created() {

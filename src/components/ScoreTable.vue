@@ -17,13 +17,20 @@
 						class="cell"
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
-						@click.left="
+						@click.left.exact="
 							$emit('update:rowSelected', rowIndex),
-								$emit('update:colSelected', colIndex)
+							$emit('update:colSelected', colIndex),
+							$emit('onSelected', [rowIndex, colIndex])
+						"
+						@click.ctrl.left="
+							$emit('onSelectedMultiple', [rowIndex, colIndex])
 						"
 						@click.right.prevent="this._ToggleHighlight(rowIndex, colIndex)"
 						:class="{
 							selected: rowIndex === rowSelected && colIndex === colSelected,
+							selectedMultiple: multipleSelection.some(
+								(item) => item[0] === rowIndex && item[1] === colIndex,
+							),
 							highlighted: this._IsHighlighted(rowIndex, colIndex),
 						}"
 					>
@@ -100,7 +107,8 @@ export default {
 		colSelected: Number,
 		rowSelected: Number,
 		timesFinished: Array,
-		metadata: Object, // <-- add metadata prop
+		multipleSelection: Array,
+		metadata: Object,
 	},
 	emits: ["update:colSelected", "update:rowSelected", "update:timesFinished"],
 	data() {
@@ -322,5 +330,9 @@ export default {
 
 .ScoreTable td.highlighted {
 	background-color: rgb(248, 181, 228);
+}
+
+.ScoreTable td.selectedMultiple {
+	background-color: orange;
 }
 </style>
