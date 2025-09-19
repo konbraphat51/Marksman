@@ -74,22 +74,34 @@ export default {
 		},
 		_UpdateHoles() {
 			let holes = []
+			
+			holes = this._GetHoles(this.rowSelected, this.colSelected)
+			for (let cnt = 0; cnt < this.multipleSelection.length; cnt++) {
+				let r = this.multipleSelection[cnt][0]
+				let c = this.multipleSelection[cnt][1]
+				holes = holes.concat(this._GetHoles(r, c))
+			}
+
+			this.holes = holes
+		},
+		_GetHoles(row, col) {
+			let holes = []
 			try {
 				// add selected cell
-				if (this.rowSelected !== -1 && this.colSelected !== -1) {
-					if (this.dataShot[this.rowSelected][this.colSelected].set) {
-						holes.push(this.dataShot[this.rowSelected][this.colSelected])
+				if (row !== -1 && col !== -1) {
+					if (this.dataShot[row][col].set) {
+						holes.push(this.dataShot[row][col])
 					}
-				} else if (this.rowSelected === -1 && this.colSelected !== -1) {
+				} else if (row === -1 && col !== -1) {
 					for (let r = 0; r < this.dataShot.length; r++) {
-						if (this.dataShot[r][this.colSelected].set) {
-							holes.push(this.dataShot[r][this.colSelected])
+						if (this.dataShot[r][col].set) {
+							holes.push(this.dataShot[r][col])
 						}
 					}
-				} else if (this.rowSelected !== -1 && this.colSelected === -1) {
+				} else if (row !== -1 && col === -1) {
 					for (let c = 0; c < this.dataShot[0].length; c++) {
-						if (this.dataShot[this.rowSelected][c].set) {
-							holes.push(this.dataShot[this.rowSelected][c])
+						if (this.dataShot[row][c].set) {
+							holes.push(this.dataShot[row][c])
 						}
 					}
 				} else {
@@ -104,28 +116,7 @@ export default {
 			} catch (e) {
 				holes = []
 			}
-			try{
-				// multiple selection cells
-				for (let cnt = 0; cnt < this.multipleSelection.length; cnt++) {
-					const row = this.multipleSelection[cnt][0]
-					const col = this.multipleSelection[cnt][1]
-					
-					if (
-						row >= 0 &&
-						row < this.dataShot.length &&
-						col >= 0 &&
-						col < this.dataShot[0].length
-					) {
-						console.log(this.multipleSelection[cnt])
-						if (this.dataShot[row][col].set) {
-							holes.push(this.dataShot[row][col])
-						}
-					}
-				}
-			} catch(e) {
-				// do nothing
-			}
-			this.holes = holes
+			return holes
 		},
 		_SelectColor(scoreX10) {
 			return this.colors[parseInt(scoreX10 / 10)]

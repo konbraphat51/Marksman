@@ -38,12 +38,19 @@
 					</td>
 					<td
 						class="cell total-row"
-						@click.left="
+						@click.left.exact="
 							$emit('update:rowSelected', rowIndex),
-								$emit('update:colSelected', -1)
+							$emit('update:colSelected', -1),
+							$emit('onSelected', [rowIndex, -1])
+						"
+						@click.ctrl.left="
+							$emit('onSelectedMultiple', [rowIndex, -1])
 						"
 						:class="{
 							selected: rowIndex === rowSelected && colSelected === -1,
+							selectedMultiple: multipleSelection.some(
+								(item) => item[0] === rowIndex && item[1] === -1,
+							),
 						}"
 					>
 						{{ ShowRowSum(rowIndex) }}
@@ -66,20 +73,29 @@
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
 						class="cell total-column"
-						@click.left="
+						@click.left.exact="
 							$emit('update:rowSelected', -1),
-								$emit('update:colSelected', colIndex)
+							$emit('update:colSelected', colIndex),
+							$emit('onSelected', [-1, colIndex])
+						"
+						@click.ctrl.left="
+							$emit('onSelectedMultiple', [-1, colIndex])
 						"
 						:class="{
 							selected: rowSelected === -1 && colSelected === colIndex,
+							selectedMultiple: multipleSelection.some(
+								(item) => item[0] === -1 && item[1] === colIndex,
+							),
 						}"
 					>
 						{{ ShowColumnSum(colIndex) }}
 					</td>
 					<td
 						class="cell total-all"
-						@click.left="
-							$emit('update:rowSelected', -1), $emit('update:colSelected', -1)
+						@click.left.exact="
+							$emit('update:rowSelected', -1),
+							$emit('update:colSelected', -1),
+							$emit('onSelected', [-1, -1])
 						"
 						:class="{
 							selected: rowSelected === -1 && colSelected === -1,
