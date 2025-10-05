@@ -9,13 +9,11 @@
 			<select
 				:value="scoreX10"
 				@change="$emit('update:scoreX10', parseInt($event.target.value))"
+				ref="scoreSelect"
+				@focus="scrollSelectToTop"
 			>
-				<option 
-					v-for="i in 110" 
-					:key="109-(i-1)" 
-					:value="109-(i-1)"
-				>
-					{{ ((109-(i-1)) / 10).toFixed(1) }}
+				<option v-for="i in 110" :key="109 - (i - 1)" :value="109 - (i - 1)">
+					{{ ((109 - (i - 1)) / 10).toFixed(1) }}
 				</option>
 			</select>
 		</div>
@@ -72,15 +70,29 @@ export default {
 	},
 	emits: ["update:scoreX10", "update:ox", "update:comment"],
 	data() {
-		return {}
+		return {};
 	},
-	methods: {},
-	computed: {
-		score() {
-			return this.scoreX10 / 10
+	methods: {
+		scrollSelectToTop() {
+			// Scroll to the top (option 10.9) when select is focused
+			this.$nextTick(() => {
+				const select = this.$refs.scoreSelect;
+				if (select && select.options && select.options.length > 0) {
+					const originalIndex = select.selectedIndex;
+					select.selectedIndex = 0;
+					setTimeout(() => {
+						select.selectedIndex = originalIndex;
+					}, 0);
+				}
+			});
 		},
 	},
-}
+	computed: {
+		score() {
+			return this.scoreX10 / 10;
+		},
+	},
+};
 </script>
 
 <style scoped>
