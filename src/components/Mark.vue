@@ -21,12 +21,7 @@
 
 			<!-- area number -->
 			<svg v-for="(radius, index) in radiuses" :key="index">
-				<text
-					v-if="radius > 10"
-					font-size="10"
-					:x="50 - radius + 2 + '%'"
-					y="51%"
-				>
+				<text v-if="radius > 10" font-size="10" :x="50 - radius + 2 + '%'" y="51%">
 					{{ index + 1 }}
 				</text>
 			</svg>
@@ -43,7 +38,7 @@
 </template>
 
 <script>
-import BulletHole from "./BulletHole.vue"
+import BulletHole from "./BulletHole.vue";
 
 export default {
 	name: "Mark",
@@ -61,65 +56,65 @@ export default {
 	data() {
 		return {
 			holes: [],
-		}
+		};
 	},
 	emits: ["clickedCoordinates"],
 	methods: {
 		_OnClicked(event) {
-			const svg = event.currentTarget
-			const rect = svg.getBoundingClientRect()
-			const xRelative = (event.clientX - rect.left) / rect.width
-			const yRelative = (event.clientY - rect.top) / rect.height
-			this.$emit("clickedCoordinates", {x: xRelative, y: yRelative})
+			const svg = event.currentTarget;
+			const rect = svg.getBoundingClientRect();
+			const xRelative = (event.clientX - rect.left) / rect.width;
+			const yRelative = (event.clientY - rect.top) / rect.height;
+			this.$emit("clickedCoordinates", { x: xRelative, y: yRelative });
 		},
 		_UpdateHoles() {
-			let holes = []
-			
-			holes = this._GetHoles(this.rowSelected, this.colSelected)
+			let holes = [];
+
+			holes = this._GetHoles(this.rowSelected, this.colSelected);
 			for (let cnt = 0; cnt < this.multipleSelection.length; cnt++) {
-				let r = this.multipleSelection[cnt][0]
-				let c = this.multipleSelection[cnt][1]
-				holes = holes.concat(this._GetHoles(r, c))
+				let r = this.multipleSelection[cnt][0];
+				let c = this.multipleSelection[cnt][1];
+				holes = holes.concat(this._GetHoles(r, c));
 			}
 
-			this.holes = holes
+			this.holes = holes;
 		},
 		_GetHoles(row, col) {
-			let holes = []
+			let holes = [];
 			try {
 				// add selected cell
 				if (row !== -1 && col !== -1) {
 					if (this.dataShot[row][col].set) {
-						holes.push(this.dataShot[row][col])
+						holes.push(this.dataShot[row][col]);
 					}
 				} else if (row === -1 && col !== -1) {
 					for (let r = 0; r < this.dataShot.length; r++) {
 						if (this.dataShot[r][col].set) {
-							holes.push(this.dataShot[r][col])
+							holes.push(this.dataShot[r][col]);
 						}
 					}
 				} else if (row !== -1 && col === -1) {
 					for (let c = 0; c < this.dataShot[0].length; c++) {
 						if (this.dataShot[row][c].set) {
-							holes.push(this.dataShot[row][c])
+							holes.push(this.dataShot[row][c]);
 						}
 					}
 				} else {
 					for (let r = 0; r < this.dataShot.length; r++) {
 						for (let c = 0; c < this.dataShot[0].length; c++) {
 							if (this.dataShot[r][c].set) {
-								holes.push(this.dataShot[r][c])
+								holes.push(this.dataShot[r][c]);
 							}
 						}
 					}
 				}
 			} catch (e) {
-				holes = []
+				holes = [];
 			}
-			return holes
+			return holes;
 		},
 		_SelectColor(scoreX10) {
-			return this.colors[parseInt(scoreX10 / 10)]
+			return this.colors[parseInt(scoreX10 / 10)];
 		},
 	},
 	computed: {
@@ -135,8 +130,8 @@ export default {
 					50, //7
 					35, //8
 					20, //9
-					8, //10
-				]
+					5, //10
+				];
 			} else if (this.guntype === "3x20" || this.guntype === "P60") {
 				return [
 					95, //1
@@ -150,33 +145,33 @@ export default {
 					15, //9
 					6, //10
 					3, //11
-				]
+				];
 			} else {
-				return [45, 25, 5, 1]
+				return [45, 25, 5, 1];
 			}
 		},
 	},
 	watch: {
 		dataShot: {
 			handler() {
-				this._UpdateHoles()
+				this._UpdateHoles();
 			},
 			deep: true,
 		},
 		rowSelected() {
-			this._UpdateHoles()
+			this._UpdateHoles();
 		},
 		colSelected() {
-			this._UpdateHoles()
+			this._UpdateHoles();
 		},
 		multipleSelection: {
 			handler() {
-				this._UpdateHoles()
+				this._UpdateHoles();
 			},
 			deep: true,
-		}
+		},
 	},
-}
+};
 </script>
 
 <style scoped>
