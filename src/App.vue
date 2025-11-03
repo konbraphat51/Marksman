@@ -255,8 +255,15 @@ export default {
 			}
 		},
 		rows(newValue) {
-			this._InitializeDataShot()
-			this._InitializeTimesFinished()
+			if (this.dataShot.length !== newValue) {
+				this._InitializeDataShot()
+			}
+			if (this.sumComments.length !== newValue + this.cols + 1) {
+				this._InitializeSumComments()
+			}
+			if (this.timesFinished.length !== newValue) {
+				this._InitializeTimesFinished()
+			}
 		},
 	},
 }
