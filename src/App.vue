@@ -180,7 +180,7 @@ export default {
 						set: false,
 						x: 0,
 						y: 0,
-						scoreX10: 0,
+						scoreX10: undefined,
 						ox: "",
 						comment: "",
 					})
