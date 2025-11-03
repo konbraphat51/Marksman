@@ -37,7 +37,6 @@ export default {
 		colors: {
 			deep: true,
 			handler() {
-				console.log(this.colors)
 				this.colorsHere = this.colors
 			},
 		},

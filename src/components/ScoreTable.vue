@@ -205,7 +205,6 @@ export default {
 				this.highlight.splice(index, 1)
 			} else {
 				this.highlight.push([row, col])
-				console.log(this.highlight)
 			}
 		},
 		_IsHighlighted(row, col) {
