@@ -249,8 +249,8 @@ export default {
 					this.prepRows = [0, 1]
 					break
 				case "3x20":
-					this.rows = 12
-					this.prepRows = [0, 1, 4, 5, 8, 9]
+					this.rows = 14
+					this.prepRows = [0, 1, 5, 6, 10, 11]
 					break
 			}
 		},
