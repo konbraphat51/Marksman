@@ -18,42 +18,46 @@
 						v-for="(col, colIndex) in cols"
 						:key="colIndex"
 						@click.left.exact="
-							$emit('update:rowSelected', rowIndex),
-							$emit('update:colSelected', colIndex),
-							$emit('onSelected', [rowIndex, colIndex])
+							!IsPositionChangeRow(rowIndex) && (
+								$emit('update:rowSelected', rowIndex),
+								$emit('update:colSelected', colIndex),
+								$emit('onSelected', [rowIndex, colIndex])
+							)
 						"
 						@click.ctrl.left="
-							$emit('onSelectedMultiple', [rowIndex, colIndex])
+							!IsPositionChangeRow(rowIndex) && $emit('onSelectedMultiple', [rowIndex, colIndex])
 						"
-						@click.right.prevent="this._ToggleHighlight(rowIndex, colIndex)"
+						@click.right.prevent="!IsPositionChangeRow(rowIndex) && this._ToggleHighlight(rowIndex, colIndex)"
 						:class="{
-							selected: rowIndex === rowSelected && colIndex === colSelected,
+							selected: rowIndex === rowSelected && colIndex === colSelected && !IsPositionChangeRow(rowIndex),
 							selectedMultiple: multipleSelection.some(
 								(item) => item[0] === rowIndex && item[1] === colIndex,
-							),
-							highlighted: this._IsHighlighted(rowIndex, colIndex),
+							) && !IsPositionChangeRow(rowIndex),
+							highlighted: this._IsHighlighted(rowIndex, colIndex) && !IsPositionChangeRow(rowIndex),
 						}"
 					>
-						{{ ShowScore(this.GetDatum(rowIndex, colIndex, "scoreX10")) }}
+						{{ IsPositionChangeRow(rowIndex) ? '' : ShowScore(this.GetDatum(rowIndex, colIndex, "scoreX10")) }}
 					</td>
 					<td
 						class="cell total-row"
 						@click.left.exact="
-							$emit('update:rowSelected', rowIndex),
-							$emit('update:colSelected', -1),
-							$emit('onSelected', [rowIndex, -1])
+							!IsPositionChangeRow(rowIndex) && (
+								$emit('update:rowSelected', rowIndex),
+								$emit('update:colSelected', -1),
+								$emit('onSelected', [rowIndex, -1])
+							)
 						"
 						@click.ctrl.left="
-							$emit('onSelectedMultiple', [rowIndex, -1])
+							!IsPositionChangeRow(rowIndex) && $emit('onSelectedMultiple', [rowIndex, -1])
 						"
 						:class="{
-							selected: rowIndex === rowSelected && colSelected === -1,
+							selected: rowIndex === rowSelected && colSelected === -1 && !IsPositionChangeRow(rowIndex),
 							selectedMultiple: multipleSelection.some(
 								(item) => item[0] === rowIndex && item[1] === -1,
-							),
+							) && !IsPositionChangeRow(rowIndex),
 						}"
 					>
-						{{ ShowRowSum(rowIndex) }}
+						{{ IsPositionChangeRow(rowIndex) ? '' : ShowRowSum(rowIndex) }}
 					</td>
 					<td class="cell time-finished">
 						<input
@@ -139,6 +143,9 @@ export default {
 		this._UpdateSums()
 	},
 	methods: {
+		IsPositionChangeRow(rowIndex) {
+			return this.guntype === "3x20" && (rowIndex === 4 || rowIndex === 9)
+		},
 		GetDatum(row, col, key) {
 			try {
 				return this.dataShot[row][col][key]
@@ -157,8 +164,18 @@ export default {
 					}
 
 				case "3x20":
-					const alphabet = ["K", "P", "S"][Math.floor(rowIndex / 4)]
-					const number = (rowIndex % 2) + 1
+					// Position change rows at indices 4 and 9
+					if (rowIndex === 4 || rowIndex === 9) {
+						return "Position change"
+					}
+					
+					// Adjust rowIndex to account for position change rows
+					let adjustedRow = rowIndex
+					if (rowIndex > 4) adjustedRow--
+					if (rowIndex > 9) adjustedRow--
+					
+					const alphabet = ["K", "P", "S"][Math.floor(adjustedRow / 4)]
+					const number = (adjustedRow % 2) + 1
 					if (this.prepRows.includes(rowIndex)) {
 						return `Preparation ${alphabet}${number}`
 					} else {
@@ -174,6 +191,9 @@ export default {
 			let prep
 
 			for (let r = 0; r < this.rows; r++) {
+				// Skip position change rows for 3x20 mode
+				const isPositionChange = this.guntype === "3x20" && (r === 4 || r === 9)
+				
 				if (this.prepRows.includes(r)) {
 					prep = true
 				} else {
@@ -186,7 +206,7 @@ export default {
 						this.rowSums[r][0] += scoreX10
 						this.rowSums[r][1] += Math.floor(scoreX10 / 10)
 
-						if (!prep) {
+						if (!prep && !isPositionChange) {
 							this.columnSums[c][0] += scoreX10
 							this.columnSums[c][1] += Math.floor(scoreX10 / 10)
 
