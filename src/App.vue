@@ -4,12 +4,14 @@
 			<Mark
 				@clickedCoordinates="
 					(coordinates) => {
-						this.selectedX = coordinates.x
-						this.selectedY = coordinates.y
+						if (this.rowSelected !== -1 && this.colSelected !== -1) {
+							this.selectedX = coordinates.x
+							this.selectedY = coordinates.y
 
-						this.dataShot[this.rowSelected][this.colSelected].x = coordinates.x
-						this.dataShot[this.rowSelected][this.colSelected].y = coordinates.y
-						this.dataShot[this.rowSelected][this.colSelected].set = true
+							this.dataShot[this.rowSelected][this.colSelected].x = coordinates.x
+							this.dataShot[this.rowSelected][this.colSelected].y = coordinates.y
+							this.dataShot[this.rowSelected][this.colSelected].set = true
+						}
 					}
 				"
 				:dataShot="dataShot"

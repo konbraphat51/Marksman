@@ -1,15 +1,22 @@
 <template>
-	<svg
-		:width="sizePercent"
-		:height="sizePercent"
-		:x="leftTopX"
-		:y="leftTopY"
-		viewBox="0 0 10 10"
-		xmlns="http://www.w3.org/2000/svg"
-	>
-		<line x1="5" y1="0" x2="5" y2="10" :stroke="color" stroke-width="1" />
-		<line x1="0" y1="5" x2="10" y2="5" :stroke="color" stroke-width="1" />
-	</svg>
+	<g>
+		<line 
+			:x1="`${x * 100}%`" 
+			:y1="`${(y * 100) - 3}%`" 
+			:x2="`${x * 100}%`" 
+			:y2="`${(y * 100) + 3}%`" 
+			:stroke="color" 
+			stroke-width="1" 
+		/>
+		<line 
+			:x1="`${(x * 100) - 3}%`" 
+			:y1="`${y * 100}%`" 
+			:x2="`${(x * 100) + 3}%`" 
+			:y2="`${y * 100}%`" 
+			:stroke="color" 
+			stroke-width="1" 
+		/>
+	</g>
 </template>
 
 <script>
@@ -19,33 +26,6 @@ export default {
 		x: Number,
 		y: Number,
 		color: String,
-	},
-	data() {
-		return {
-			size: 6, //%
-		}
-	},
-	methods: {},
-	computed: {
-		leftTopX() {
-			let x = this.x * 100 - this.size / 2
-			return `${x}%`
-		},
-		leftTopY() {
-			let y = this.y * 100 - this.size / 2
-			return `${y}%`
-		},
-		rightBottomX() {
-			let x = this.x * 100 + this.size / 2
-			return `${x}%`
-		},
-		rightBottomY() {
-			let y = this.y * 100 + this.size / 2
-			return `${y}%`
-		},
-		sizePercent() {
-			return `${this.size}%`
-		},
 	},
 }
 </script>

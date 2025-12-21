@@ -29,6 +29,7 @@
 			<!-- bullet hole for selected -->
 			<BulletHole
 				v-for="(hole, index) in holes"
+				:key="index"
 				:x="hole.x"
 				:y="hole.y"
 				:color="_SelectColor(hole.scoreX10)"
@@ -114,7 +115,11 @@ export default {
 			return holes;
 		},
 		_SelectColor(scoreX10) {
-			return this.colors[parseInt(scoreX10 / 10)];
+			if (scoreX10 === undefined || scoreX10 === null) {
+				return this.colors[0]; // デフォルト色
+			}
+			const index = Math.floor(scoreX10 / 10);
+			return this.colors[index] || this.colors[0];
 		},
 	},
 	computed: {
